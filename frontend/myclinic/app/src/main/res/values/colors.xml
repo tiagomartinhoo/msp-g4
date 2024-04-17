@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue">#6E93FB</color>
+    <color name="yellow">#EEB953</color>
+    <color name="pink">#FF6584</color>
+    <color name="darkest_grey">#3F3D56</color>
+    <color name="dark_grey">#72809D</color>
+    <color name="grey">#B8BFCE</color>
+    <color name="borders">#DCE0E7</color>
+    <color name="disabled">#F0F4F8</color>
+    <color name="back_ini">#FAFAFD</color>
+    <color name="white">#FFFFFF</color>
+    <color name="success">#A8E42D</color>
+    <color name="success_back">#F0FBEA</color>
+    <color name="fail">#FF3E1D</color>
+    <color name="fail_back">#FFE7E2</color>
+    <color name="warning">#FED430</color>
+    <color name="warning_back">#FFFBE7</color>
+</resources>
