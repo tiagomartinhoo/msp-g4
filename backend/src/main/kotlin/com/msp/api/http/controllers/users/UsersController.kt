@@ -59,9 +59,4 @@ class UsersController(private val usersService: UsersService) {
 
         return ResponseEntity.ok().headers(headers).body(profilePicture)
     }
-
-    companion object {
-        const val DEFAULT_PAGE = "0"
-        const val DEFAULT_SIZE = "10"
-    }
 }

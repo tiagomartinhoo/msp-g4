@@ -5,5 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 interface PatientsRepository : MongoRepository<Patient, String> {
 
-    fun findByPId(pId: String): Patient?
+    fun findBypId(pId: String): Patient?
+    fun deleteBypId(pId: String)
 }

@@ -1,11 +1,14 @@
 package com.msp.api.services
 
 import com.msp.api.domain.User
+import com.msp.api.domain.UserRole
 import com.msp.api.domain.UserRole.Companion.toRole
 import com.msp.api.http.controllers.users.models.CreateUserInput
 import com.msp.api.http.controllers.users.models.CreateUserOutput
 import com.msp.api.http.controllers.users.models.LoginOutput
+import com.msp.api.http.controllers.users.models.UpdateUserInput
 import com.msp.api.http.controllers.users.models.UserOutput
+import com.msp.api.http.controllers.users.models.UsersOutput
 import com.msp.api.http.controllers.users.models.toUserOutput
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.EmailAlreadyExists
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.LoginFailed
@@ -15,6 +18,7 @@ import com.msp.api.services.utils.ServiceUtils
 import com.msp.api.storage.cloud.CloudStorageUtils
 import com.msp.api.storage.repo.UsersRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import orion.app.services.utils.Hash
 import java.util.*
@@ -67,7 +71,34 @@ class UsersService(
         cloudStorageUtils.downloadProfilePicture(uid)
 
     fun getUserById(uid: String): UserOutput {
-        val user = repo.findByUId(uid) ?: throw UserNotFound()
+        val user = repo.findByuId(uid) ?: throw UserNotFound()
         return user.toUserOutput()
+    }
+
+    fun getUsers(text: String, role: UserRole, page: Int, size: Int): UsersOutput {
+        val pageable = serviceUtils.requestPagination(page, size)
+
+        val users: Page<User> = repo.searchAllFieldsWithRole(text, role, pageable)
+
+        return UsersOutput(users.totalPages, users.toList().map { it.toUserOutput() })
+    }
+
+    fun updateUser(uId: String, input: UpdateUserInput): UserOutput {
+        input.phoneNumber?.let { serviceUtils.isValidPhoneNumber(it) }
+        input.password?.let { serviceUtils.isPasswordSafe(it) }
+
+        val user = repo.findByuId(uId) ?: throw UserNotFound()
+        return repo.save(
+            user.copy(
+                name = input.name ?: user.name,
+                phoneNumber = input.phoneNumber.also { it?.let { serviceUtils.isValidPhoneNumber(it) } } ?: user.phoneNumber,
+                password = input.password?.let { Hash.of(it) } ?: user.password
+            )
+        ).toUserOutput()
+    }
+
+    fun deleteUser(uId: String) {
+        val user = repo.findByuId(uId) ?: throw UserNotFound()
+        repo.delete(user)
     }
 }

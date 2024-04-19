@@ -4,15 +4,20 @@ import com.msp.api.http.Uris
 import com.msp.api.http.controllers.users.models.CreateDoctorInput
 import com.msp.api.http.controllers.users.models.CreateUserOutput
 import com.msp.api.http.controllers.users.models.DoctorOutput
+import com.msp.api.http.controllers.users.models.DoctorsOutput
+import com.msp.api.http.controllers.users.models.UpdateDoctorInput
 import com.msp.api.http.pipeline.authentication.Authentication
 import com.msp.api.services.DoctorsService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -34,6 +39,31 @@ class DoctorsController(private val doctorsService: DoctorsService) {
         @PathVariable dID: String
     ): ResponseEntity<DoctorOutput> {
         return ResponseEntity.ok(doctorsService.getDoctorById(dID))
+    }
+
+    @GetMapping(Uris.DOCTORS)
+    fun getDoctors(
+        @RequestParam(required = false, defaultValue = DEFAULT_PAGE) page: Int,
+        @RequestParam(required = false, defaultValue = DEFAULT_SIZE) size: Int,
+        @RequestParam(required = false, defaultValue = "") text: String
+    ): ResponseEntity<DoctorsOutput> {
+        return ResponseEntity.ok(doctorsService.getDoctors(text, page, size))
+    }
+
+    @PutMapping(Uris.DOCTOR_BY_ID)
+    fun updateDoctor(
+        @PathVariable dID: String,
+        @RequestBody updateDoctorInput: UpdateDoctorInput
+    ): ResponseEntity<DoctorOutput> {
+        return ResponseEntity.ok(doctorsService.updateDoctor(dID, updateDoctorInput))
+    }
+
+    @DeleteMapping(Uris.DOCTOR_BY_ID)
+    fun deleteDoctor(
+        @PathVariable dID: String
+    ): ResponseEntity<Unit> {
+        doctorsService.deleteDoctor(dID)
+        return ResponseEntity.status(HttpStatus.OK).build()
     }
 
     companion object {

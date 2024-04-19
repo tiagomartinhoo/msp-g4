@@ -6,6 +6,9 @@ import com.msp.api.http.controllers.users.models.CreateDoctorInput
 import com.msp.api.http.controllers.users.models.CreateUserInput
 import com.msp.api.http.controllers.users.models.CreateUserOutput
 import com.msp.api.http.controllers.users.models.DoctorOutput
+import com.msp.api.http.controllers.users.models.DoctorsOutput
+import com.msp.api.http.controllers.users.models.UpdateDoctorInput
+import com.msp.api.http.controllers.users.models.UpdateUserInput
 import com.msp.api.http.controllers.users.models.toDoctorOutput
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.UserNotFound
 import com.msp.api.services.utils.ServiceUtils
@@ -28,7 +31,7 @@ class DoctorsService(
                 phoneNumber = input.phoneNumber,
                 password = input.password,
                 nif = input.nif,
-                role = UserRole.PATIENT.toString()
+                role = UserRole.DOCTOR.toString()
             )
         )
 
@@ -44,7 +47,35 @@ class DoctorsService(
 
     fun getDoctorById(dID: String): DoctorOutput {
         val user = usersService.getUserById(dID)
-        val doctor = repo.findByDId(dID) ?: throw UserNotFound()
+        val doctor = repo.findBydId(dID) ?: throw UserNotFound()
         return user.toDoctorOutput(doctor)
+    }
+
+    fun getDoctors(text: String, page: Int, size: Int): DoctorsOutput {
+        val users = usersService.getUsers(text, UserRole.DOCTOR, page, size)
+        val doctors = users.list.map { getDoctorById(it.id) }
+
+        return DoctorsOutput(users.pageCount, doctors)
+    }
+
+    fun updateDoctor(dId: String, input: UpdateDoctorInput): DoctorOutput {
+        val updatedUser = usersService.updateUser(
+            uId = dId,
+            input = UpdateUserInput(input.name, input.phoneNumber, input.password)
+        )
+        val doctor = repo.findBydId(dId) ?: throw UserNotFound()
+
+        val updatedDoctor = repo.save(
+            doctor.copy(
+                specialty = input.specialty ?: doctor.specialty
+            )
+        )
+
+        return updatedUser.toDoctorOutput(updatedDoctor)
+    }
+
+    fun deleteDoctor(dId: String) {
+        usersService.deleteUser(dId)
+        repo.deleteBydId(dId)
     }
 }

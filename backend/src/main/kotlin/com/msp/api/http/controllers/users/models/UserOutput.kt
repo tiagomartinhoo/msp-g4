@@ -48,3 +48,13 @@ data class UsersOutput(
     val pageCount: Int,
     val list: List<UserOutput>
 )
+
+data class PatientsOutput(
+    val pageCount: Int,
+    val list: List<PatientOutput>
+)
+
+data class DoctorsOutput(
+    val pageCount: Int,
+    val list: List<DoctorOutput>
+)
