@@ -15,7 +15,7 @@
         android:text="Welcome Back!"
         android:textColor="@color/darkest_grey"
         android:textSize="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

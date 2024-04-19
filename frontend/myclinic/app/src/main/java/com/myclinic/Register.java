@@ -13,7 +13,10 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shuhart.stepview.StepView;
 
@@ -30,6 +33,9 @@ public class Register extends AppCompatActivity {
     private ConstraintLayout cLayAddressRequest;
     private ConstraintLayout cLayAddressForm;
     private ConstraintLayout cLayConfirmation;
+
+    private TextView textViewName, textViewPhoneNr, textViewEmail, textViewInsur, textViewNIF, textViewGender, textViewDate, textViewAdress, textViewPostalCode, textViewDoorNr;
+    private EditText editTextName, editTextPhoneNr, editTextEmail, editTextInsur, editTextNIF, editTextPass, editTextAdress, editTextPostalCode, editTextDoorNr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,28 @@ public class Register extends AppCompatActivity {
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN , WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN );
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
 
+        //DECLARATIONS REGISTER
+        editTextName = findViewById(R.id.editNameGen);
+        editTextPhoneNr = findViewById(R.id.editPCGen);
+        editTextEmail = findViewById(R.id.editEmailGen);
+        editTextInsur = findViewById(R.id.editinsurance);
+        editTextNIF = findViewById(R.id.editNIFGen);
+        editTextPass = findViewById(R.id.editPasswordGen);
+        editTextAdress = findViewById(R.id.editAddressAddForm);
+        editTextPostalCode = findViewById(R.id.editPCAddForm);
+        editTextDoorNr = findViewById(R.id.editDNAddForm);
+
+        textViewName = findViewById(R.id.textNameConf);
+        textViewPhoneNr = findViewById(R.id.textPhoneConf);
+        textViewEmail = findViewById(R.id.textEmailConf);
+        textViewInsur = findViewById(R.id.textInsuranceConf);
+        textViewNIF = findViewById(R.id.textNIFConf);
+        textViewGender = findViewById(R.id.textGenderConf);
+        textViewDate = findViewById(R.id.textBDConf);
+        textViewAdress = findViewById(R.id.textAddressConf);
+        textViewPostalCode = findViewById(R.id.textPCConf);
+        textViewDoorNr = findViewById(R.id.textDNConf);
+
         //SPINNER (DROPDOWN)
         Spinner spinner = findViewById(R.id.spinnerGender);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.genders, R.layout.spinner_item);
@@ -71,17 +99,43 @@ public class Register extends AppCompatActivity {
         findViewById(R.id.nextGen).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentStep++;
-                cLayGeneral.setVisibility(View.INVISIBLE);
-                cLayAddressRequest.setVisibility(View.VISIBLE);
-                stepView.go(currentStep, true);
+                if(!editTextName.getText().toString().equals("") &&
+                        !editTextPhoneNr.getText().toString().equals("") &&
+                        !editTextEmail.getText().toString().equals("") &&
+                        !editTextInsur.getText().toString().equals("") &&
+                        !editTextNIF.getText().toString().equals("") &&
+                        !editTextPass.getText().toString().equals("")){
+                    currentStep++;
+                    cLayGeneral.setVisibility(View.GONE);
+                    cLayAddressRequest.setVisibility(View.VISIBLE);
+                    stepView.go(currentStep, true);
+                }else{
+                    Toast.makeText(Register.this, "Empty Inputs" , Toast.LENGTH_SHORT).show();
+                }
             }
         });
         findViewById(R.id.nextAddReq).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                textViewName.setText(editTextName.getText().toString());
+                textViewEmail.setText(editTextEmail.getText().toString());
+                textViewInsur.setText(editTextInsur.getText().toString());
+                textViewNIF.setText(editTextNIF.getText().toString());
+                textViewPhoneNr.setText(editTextPhoneNr.getText().toString());
+                textViewGender.setText(spinner.getSelectedItem().toString());
+                textViewDate.setText(dateButton.getText().toString());
+                if(editTextAdress.getText().toString().equals("")){
+                    textViewAdress.setText("Empty");
+                }else{textViewAdress.setText(editTextAdress.getText().toString());}
+                if(editTextPostalCode.getText().toString().equals("")){
+                    textViewPostalCode.setText("Empty");
+                }else{textViewPostalCode.setText(editTextPostalCode.getText().toString());}
+                if(editTextDoorNr.getText().toString().equals("")){
+                    textViewDoorNr.setText("Empty");
+                }else{textViewDoorNr.setText(editTextDoorNr.getText().toString());}
+
                 currentStep++;
-                cLayAddressRequest.setVisibility(View.INVISIBLE);
+                cLayAddressRequest.setVisibility(View.GONE);
                 cLayConfirmation.setVisibility(View.VISIBLE);
                 stepView.go(currentStep, true);
             }
@@ -89,8 +143,25 @@ public class Register extends AppCompatActivity {
         findViewById(R.id.nextAddForm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                textViewName.setText(editTextName.getText().toString());
+                textViewEmail.setText(editTextEmail.getText().toString());
+                textViewInsur.setText(editTextInsur.getText().toString());
+                textViewNIF.setText(editTextNIF.getText().toString());
+                textViewPhoneNr.setText(editTextPhoneNr.getText().toString());
+                textViewGender.setText(spinner.getSelectedItem().toString());
+                textViewDate.setText(dateButton.getText().toString());
+                if(editTextAdress.getText().toString().equals("")){
+                    textViewAdress.setText("Empty");
+                }else{textViewAdress.setText(editTextAdress.getText().toString());}
+                if(editTextPostalCode.getText().toString().equals("")){
+                    textViewPostalCode.setText("Empty");
+                }else{textViewPostalCode.setText(editTextPostalCode.getText().toString());}
+                if(editTextDoorNr.getText().toString().equals("")){
+                    textViewDoorNr.setText("Empty");
+                }else{textViewDoorNr.setText(editTextDoorNr.getText().toString());}
+
                 currentStep++;
-                cLayAddressForm.setVisibility(View.INVISIBLE);
+                cLayAddressForm.setVisibility(View.GONE);
                 cLayConfirmation.setVisibility(View.VISIBLE);
                 stepView.go(currentStep, true);
             }
@@ -98,8 +169,9 @@ public class Register extends AppCompatActivity {
         findViewById(R.id.nextConf).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //BOTÃO FINAL DE REGISTER
                 stepView.done(true);
-                //startActivity(new Intent(Register.this, TEMP.class));
+                startActivity(new Intent(Register.this, MainActivity.class));
             }
         });
         findViewById(R.id.backAddReq).setOnClickListener(new View.OnClickListener() {

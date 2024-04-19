@@ -64,6 +64,7 @@ public class Login extends AppCompatActivity {
 
                 startActivity(new Intent(Login.this, MainActivity.class));
 
+                //MÉTODO PARA BUSCAR INFORMAÇÃO AO BACKOFFICE
                 /* JSONObject postData = new JSONObject();
                 try {
                     postData.put("email", editTextEmail.getText().toString());
