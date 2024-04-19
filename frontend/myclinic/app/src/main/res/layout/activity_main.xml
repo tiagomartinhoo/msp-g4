@@ -5,28 +5,611 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/white">
+    android:background="@color/back_ini">
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    
-    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
-        android:id="@+id/navigation"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/inter_regular"
+        android:text="Welcome Back!"
+        android:textColor="@color/darkest_grey"
+        android:textSize="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Home Page"
+        android:textColor="@color/darkest_grey"
+        android:textSize="28dp"
+        android:layout_marginTop="-10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:mbn_backgroundBottomColor="@color/white"
-        app:mbn_circleColor="@color/purple"
-        app:mbn_defaultIconColor="@color/grey"
-        app:mbn_rippleColor="@color/white"
-        app:mbn_selectedIconColor="@color/white"/>
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="100dp"
+        app:layout_constraintTop_toBottomOf="@id/title2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/checkincard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/card_checkin"
+                android:elevation="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_semibold"
+                            android:text="Check In Now!"
+                            android:textColor="@color/darkest_grey"
+                            android:textSize="21dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="The check in for your appointment is now available."
+                            android:textColor="@color/darkest_grey"
+                            android:textSize="14dp" />
+
+                        <Button
+                            android:id="@+id/btncheckin"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/button_white"
+                            android:fontFamily="@font/inter_regular"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:text="Check In"
+                            android:textAllCaps="false"
+                            android:textColor="@color/darkest_grey"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_checkin" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/featured"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="Featured"
+                android:textColor="@color/darkest_grey"
+                android:textSize="21dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkincard" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bookappcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_bookapp"
+                android:elevation="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/featured">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_doctor" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_semibold"
+                            android:text="Schedule your Visit!"
+                            android:textColor="@color/white"
+                            android:textSize="21dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="Get an Appointment with our Experts."
+                            android:textColor="@color/white"
+                            android:textSize="14dp" />
+
+                        <Button
+                            android:id="@+id/btnbookapp"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/button_white"
+                            android:fontFamily="@font/inter_regular"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:text="Book Visit"
+                            android:textAllCaps="false"
+                            android:textColor="@color/darkest_grey"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/upcomingapps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintTop_toBottomOf="@id/bookappcard"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Upcoming Appointments"
+                    android:textColor="@color/darkest_grey"
+                    android:textSize="21dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="View All"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16dp"
+                    android:gravity="right"/>
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/upcomingcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_general"
+                android:elevation="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upcomingapps">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:cardCornerRadius="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/image_empty_profile" />
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="15dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+                    app:layout_constraintStart_toEndOf="@+id/cardView2"
+                    app:layout_constraintTop_toTopOf="@+id/cardView2">
+
+                    <TextView
+                        android:id="@+id/docname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="Dr. Name"
+                        android:textColor="@color/darkest_grey"
+                        android:textSize="18dp"/>
+
+                    <TextView
+                        android:id="@+id/docspec"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Specialty"
+                        android:layout_marginTop="-7dp"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="13dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/tag_when"
+                        android:drawableLeft="@drawable/ic_calendar"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
+                        android:text="00/00"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/tag_when"
+                        android:drawableLeft="@drawable/ic_clock"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
+                        android:text="00:00"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tag_where"
+                        android:drawableLeft="@drawable/ic_marker"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
+                        android:text="Almada"
+                        android:textAlignment="center"
+                        android:textColor="@color/yellow"
+                        android:textSize="13sp" />
+
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="Functionalities"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/darkest_grey"
+                android:textSize="21dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    android:weightSum="3"
+                    android:gravity="center"
+                    android:paddingBottom="14dp"
+                    android:layout_gravity="center">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/card_general"
+                        android:backgroundTint="@color/pink"
+                        android:elevation="5dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/circle_general"
+                            android:src="@drawable/ic_doctor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView"
+                            android:text="Doctors"
+                            android:gravity="center"
+                            android:fontFamily="@font/inter_medium"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/card_general"
+                        android:backgroundTint="@color/pink"
+                        android:elevation="5dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/circle_general"
+                            android:src="@drawable/ic_meds"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_medium"
+                            android:gravity="center"
+                            android:text="Meds"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                            tools:layout_editor_absoluteX="10dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/card_general"
+                        android:backgroundTint="@color/yellow"
+                        android:elevation="5dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/circle_general"
+                            android:src="@drawable/ic_equipment"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_medium"
+                            android:gravity="center"
+                            android:text="Equipment"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                            tools:layout_editor_absoluteX="10dp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    android:weightSum="3"
+                    android:gravity="center"
+                    android:layout_gravity="center">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/card_general"
+                        android:backgroundTint="@color/blue"
+                        android:elevation="5dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/circle_general"
+                            android:src="@drawable/ic_chat"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                            android:text="Chats"
+                            android:gravity="center"
+                            android:fontFamily="@font/inter_medium"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/card_general"
+                        android:backgroundTint="@color/blue"
+                        android:elevation="5dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/circle_general"
+                            android:src="@drawable/ic_history"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_medium"
+                            android:gravity="center"
+                            android:text="History"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+                            tools:layout_editor_absoluteX="10dp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/card_general"
+                        android:backgroundTint="@color/yellow"
+                        android:elevation="5dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/circle_general"
+                            android:src="@drawable/ic_services"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_medium"
+                            android:gravity="center"
+                            android:text="Services"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                            tools:layout_editor_absoluteX="10dp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

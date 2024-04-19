@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">My Clinic</string>
+    <string name="app_name">My Clinic</string>
     <array name="details">
         <item>General</item>
         <item>Address</item>
@@ -9,31 +9,5 @@
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
-    </string-array>
-    <string-array name="entrance">
-        <item>Below 2m</item>
-        <item>2m to 5m</item>
-        <item>Over 5m</item>
-    </string-array>
-    <string-array name="type1">
-        <item>Private</item>
-        <item>Public</item>
-    </string-array>
-    <string-array name="type2">
-        <item>Covered</item>
-        <item>Outdoors</item>
-    </string-array>
-    <string-array name="rental">
-        <item>One-Time Rental</item>
-        <item>Daily Rental</item>
-        <item>Weekly Rental</item>
-        <item>Monthly Rental</item>
-    </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string-array name="rangeSliderValues">
-        <item>0</item>
-        <item>30</item>
     </string-array>
 </resources>

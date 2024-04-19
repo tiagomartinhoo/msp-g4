@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.OnSpot" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.MyClinic" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimary">@color/blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:windowTranslucentStatus">true</item>
@@ -11,24 +11,18 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.OnSpot.NoActionBar">
+    <style name="Theme.MyClinic.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.OnSpot.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.MyClinic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.OnSpot.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.MyClinic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
-    </style>
-
-    <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/custom_ratingbar</item>
-                <item name="android:minHeight">30dip</item>
-                <item name="android:maxHeight">30dip</item>
     </style>
 
     <style name="Widget.App.Tooltip" parent="Widget.MaterialComponents.Tooltip">
@@ -41,5 +35,4 @@
         <item name="fontFamily">@font/inter_medium</item>
         <item name="android:fontFamily">@font/inter_medium</item>
     </style>
-
 </resources>

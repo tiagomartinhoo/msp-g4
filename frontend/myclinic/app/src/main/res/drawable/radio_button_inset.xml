@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/rounded_corner_radio"
+    android:drawable="@drawable/radio_general"
     android:insetLeft="20dp"/>
