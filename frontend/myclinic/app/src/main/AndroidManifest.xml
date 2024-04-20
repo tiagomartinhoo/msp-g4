@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyClinic"
         tools:targetApi="31">
         <activity
+            android:name=".BookVisit"
+            android:exported="false" />
+        <activity
             android:name=".RegisterDoctor"
             android:exported="false" />
         <activity

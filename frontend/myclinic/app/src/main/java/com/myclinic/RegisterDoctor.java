@@ -33,4 +33,12 @@ public class RegisterDoctor extends AppCompatActivity {
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN , WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN );
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
     }
+
+    public void Cancel(View view) {
+        finish();
+    }
+
+    public void Register(View view) {
+        //botao de registo
+    }
 }

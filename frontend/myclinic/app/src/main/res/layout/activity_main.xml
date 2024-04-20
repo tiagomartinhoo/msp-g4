@@ -61,6 +61,8 @@
                 android:background="@drawable/card_checkin"
                 android:elevation="5dp"
                 android:paddingHorizontal="10dp"
+                android:clickable="true"
+                android:onClick="Checkin"
                 android:paddingTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +128,54 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/checkincard2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/card_checkin"
+                android:elevation="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="15dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title2">
+
+                <TextView
+                    android:id="@+id/tickettitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="center"
+                    android:text="Wait your turn:"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/darkest_grey"
+                    android:textSize="21dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/ticket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_sec"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="center"
+                    android:paddingHorizontal="50dp"
+                    android:paddingVertical="15dp"
+                    android:text="G - 0014"
+                    android:textColor="@color/darkest_grey"
+                    android:textSize="32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tickettitle" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:id="@+id/featured"
                 android:layout_width="match_parent"
@@ -148,6 +198,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/card_bookapp"
                 android:elevation="5dp"
+                android:clickable="true"
+                android:onClick="Schedule"
                 android:paddingHorizontal="10dp"
                 android:paddingTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
