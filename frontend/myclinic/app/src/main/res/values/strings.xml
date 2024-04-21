@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Clinic</string>
+    <string name="app_name">MyClinic</string>
     <array name="details">
         <item>General</item>
         <item>Address</item>
