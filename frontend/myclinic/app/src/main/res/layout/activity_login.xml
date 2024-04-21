@@ -211,8 +211,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="Login"
                     style="?android:attr/borderlessButtonStyle"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:indeterminate="true"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@id/constraintButton"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="@id/constraintButton"
+                    app:layout_constraintTop_toBottomOf="@id/constraintButton" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

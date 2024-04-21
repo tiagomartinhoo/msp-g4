@@ -1,7 +1,6 @@
 package com.myclinic;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,10 +10,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.myclinic.Downloader.PostData;
-
+import com.myclinic.http.Endpoints;
+import com.myclinic.http.PostData;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,16 +21,15 @@ public class Login extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPw;
     private Button button;
-    private String URL = "https://garage-rent-api.azurewebsites.net/api/Account/Login";
+    private ProgressBar progressBar;
 
-
-
-    static final String id = "id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        progressBar = findViewById(R.id.progressBar);
 
         // SHARED PREFERENCES
         SharedPreferences sharedPref = this.getSharedPreferences("login", MODE_PRIVATE);
@@ -61,55 +59,86 @@ public class Login extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                // Send login request to the backend
+                sendLoginRequest();
+            }
 
-                startActivity(new Intent(Login.this, MainActivity.class));
+            private void startMainActivity() {
+                Intent intent = new Intent(Login.this, MainActivity.class);
+                startActivity(intent);
+            }
 
-                //MÉTODO PARA BUSCAR INFORMAÇÃO AO BACKOFFICE
-                /* JSONObject postData = new JSONObject();
+            private void sendLoginRequest() {
+                JSONObject postData = createLoginData();
+                if (postData != null) {
+                    PostData task = new PostData(postData) {
+                        @Override
+                        protected void onPostExecute(JSONObject result) {
+                            handleLoginResponse(result);
+                        }
+                    };
+                    task.execute(Endpoints.LOGIN);
+                }
+            }
+
+            private JSONObject createLoginData() {
+                String email = editTextEmail.getText().toString();
+                String password = editTextPw.getText().toString();
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Email and password cannot be empty", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
+
+                JSONObject postData = new JSONObject();
                 try {
-                    postData.put("email", editTextEmail.getText().toString());
-                    postData.put("password", editTextPw.getText().toString());
+                    postData.put("email", email);
+                    postData.put("password", password);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return postData;
+            }
 
-                PostData task = new PostData(postData) {
-                    @Override
-                    protected void onPostExecute(JSONObject result) {
-                        super.onPostExecute(result);
-
-                        // Log the response for debugging
-                        Log.d("LoginResponse", result != null ? result.toString() : "null");
-
-                        // Handle the result here
-                        if (result != null && result.has("id")) {
-                            // Successfully logged in
-                            // Save user credentials to SharedPreferences
-                            try {
-                                editor.putString("id", result.getString("id")).apply();
-                                Log.v("Login", sharedPref.getString("id", id));
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                            //editor.putString("pass_user", editTextPw.getText().toString()).apply();
-                            startActivity(new Intent(Login.this, UserTypePick.class));
+            private void handleLoginResponse(JSONObject result) {
+                progressBar.setVisibility(View.GONE);
+                if (result != null && result.has("token")) {
+                    // Successfully logged in
+                    saveUserCredentials(result);
+                    startMainActivity();
+                } else {
+                    // Login unsuccessful
+                    try {
+                        if (result != null && result.has("title") && result.has("status")) {
+                            Toast.makeText(getApplicationContext(), result.getString("title"), Toast.LENGTH_SHORT).show();
                         } else {
-                            // Login unsuccessful
                             Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_SHORT).show();
                         }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-                };
-                task.execute(URL);*/
+
+                }
             }
+
+            private void saveUserCredentials(JSONObject result) {
+                String token;
+                try {
+                    token = result.getString("token");
+                    editor.putString("token", token).apply();
+                    Log.v("Login", sharedPref.getString("token", token));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
         });
     }
 
     // REGISTER INTENT
     public void Register(View view) {
-        startActivity(new Intent(Login.this, Register.class));
+        startActivity(new Intent(Login.this, RegisterPatient.class));
     }
-
-
-
 
 }

@@ -1,14 +1,13 @@
 package com.myclinic;
 
+import android.content.Intent;
 import android.os.Bundle;
-
+import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.myclinic.R;
 
 public class Admin extends AppCompatActivity {
 
@@ -22,5 +21,9 @@ public class Admin extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void AddDoctor(View view) {
+        startActivity(new Intent(Admin.this, RegisterDoctor.class));
     }
 }
