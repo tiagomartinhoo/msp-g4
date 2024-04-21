@@ -275,7 +275,7 @@
                 android:weightSum="2">
 
                 <EditText
-                    android:id="@+id/editNIFGen"
+                    android:id="@+id/editPassGen"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
@@ -292,7 +292,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
                 <EditText
-                    android:id="@+id/editPasswordGen"
+                    android:id="@+id/editNIFGen"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_general"
@@ -308,6 +308,37 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textTitleSpecialtyGen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="Specialty *"
+                android:textColor="@color/dark_grey"
+                android:textSize="13dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutEditPasswordNIFGen" />
+
+            <EditText
+                android:id="@+id/editSpecialtyGen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_general"
+                android:fontFamily="@font/inter_medium"
+                android:hint="Specialty"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/darkest_grey"
+                android:textColorHint="@color/grey"
+                android:textSize="13sp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleSpecialtyGen" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -348,7 +379,6 @@
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:text="Register"
-                android:onClick="Register"
                 android:textAllCaps="false"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"

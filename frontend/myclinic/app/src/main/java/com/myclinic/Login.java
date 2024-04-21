@@ -78,7 +78,7 @@ public class Login extends AppCompatActivity {
                             handleLoginResponse(result);
                         }
                     };
-                    task.execute(Endpoints.LOGIN_ENDPOINT);
+                    task.execute(Endpoints.LOGIN);
                 }
             }
 
@@ -138,7 +138,7 @@ public class Login extends AppCompatActivity {
 
     // REGISTER INTENT
     public void Register(View view) {
-        startActivity(new Intent(Login.this, Register.class));
+        startActivity(new Intent(Login.this, RegisterPatient.class));
     }
 
 }

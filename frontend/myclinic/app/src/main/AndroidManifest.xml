@@ -27,7 +27,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".RegisterPatient"
             android:exported="false" />
         <activity
             android:name=".Login"

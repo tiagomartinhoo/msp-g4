@@ -5,7 +5,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,12 +18,20 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.myclinic.http.Endpoints;
+import com.myclinic.http.PostData;
 import com.shuhart.stepview.StepView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Register extends AppCompatActivity {
+public class RegisterPatient extends AppCompatActivity {
 
     private int currentStep = 0;
     private DatePickerDialog datePickerDialog;
@@ -37,7 +47,11 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_patient);
+
+        // SHARED PREFERENCES
+        SharedPreferences sharedPref = this.getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
 
         //STATUS BAR INVISIBLE
         Window w = getWindow();
@@ -50,7 +64,6 @@ public class Register extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        //FAZER COM QUE O TECLADO PONHA OS EDITTEXT'S PARA CIMA
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN , WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN );
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.TYPE_STATUS_BAR);
 
@@ -60,7 +73,7 @@ public class Register extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editEmailGen);
         editTextInsur = findViewById(R.id.editinsurance);
         editTextNIF = findViewById(R.id.editNIFGen);
-        editTextPass = findViewById(R.id.editPasswordGen);
+        editTextPass = findViewById(R.id.editPassGen);
         editTextAdress = findViewById(R.id.editAddressAddForm);
         editTextPostalCode = findViewById(R.id.editPCAddForm);
         editTextDoorNr = findViewById(R.id.editDNAddForm);
@@ -107,7 +120,7 @@ public class Register extends AppCompatActivity {
                     cLayAddressRequest.setVisibility(View.VISIBLE);
                     stepView.go(currentStep, true);
                 }else{
-                    Toast.makeText(Register.this, "Empty Inputs" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterPatient.this, "Empty Inputs" , Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -166,10 +179,89 @@ public class Register extends AppCompatActivity {
         findViewById(R.id.nextConf).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //BOTÃO FINAL DE REGISTER
                 stepView.done(true);
-                startActivity(new Intent(Register.this, MainActivity.class));
+                sendRegisterRequest();
             }
+
+            private void startMainActivity() {
+                Intent intent = new Intent(RegisterPatient.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            private void sendRegisterRequest() {
+                JSONObject postData = createRegisterData();
+                if (postData != null) {
+                    PostData task = new PostData(postData) {
+                        @Override
+                        protected void onPostExecute(JSONObject result) {
+                            handleLoginResponse(result);
+                        }
+                    };
+                    task.execute(Endpoints.PATIENTS);
+                }
+            }
+
+            private JSONObject createRegisterData() {
+                String name = textViewName.getText().toString();
+                String email = textViewEmail.getText().toString();
+                String phoneNumber = textViewPhoneNr.getText().toString();
+                String password = editTextPass.getText().toString();
+                String nif = textViewNIF.getText().toString();
+                String birthDate = textViewDate.getText().toString();
+                String gender = textViewGender.getText().toString();
+                String address = textViewAdress.getText().toString();
+                String insurance = textViewInsur.getText().toString();
+
+
+                JSONObject postData = new JSONObject();
+                try {
+                    postData.put("name", name);
+                    postData.put("email", email);
+                    postData.put("phoneNumber", phoneNumber);
+                    postData.put("password", password);
+                    postData.put("nif", nif);
+                    postData.put("birthDate", birthDate);
+                    postData.put("gender", gender);
+                    postData.put("address", address);
+                    postData.put("insurance", insurance);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return postData;
+            }
+
+            private void handleLoginResponse(JSONObject result) {
+                //progressBar.setVisibility(View.GONE);
+                if (result != null && result.has("token")) {
+                    // Successfully register
+                    saveUserCredentials(result);
+                    startMainActivity();
+                } else {
+                    // Register unsuccessful
+                    try {
+                        if (result != null && result.has("title") && result.has("status")) {
+                            Toast.makeText(getApplicationContext(), result.getString("title"), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Invalid Register", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+            }
+
+            private void saveUserCredentials(JSONObject result) {
+                String token;
+                try {
+                    token = result.getString("token");
+                    editor.putString("token", token).apply();
+                    Log.v("Register", sharedPref.getString("token", token));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
         });
         findViewById(R.id.backAddReq).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +304,7 @@ public class Register extends AppCompatActivity {
         findViewById(R.id.cancelGen).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Register.this, Login.class));
+                startActivity(new Intent(RegisterPatient.this, Login.class));
             }
         });
         List<String> steps = new ArrayList<>();
@@ -261,7 +353,7 @@ public class Register extends AppCompatActivity {
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
     }
     private String makeDateString(int day, int month, int year) {
-        return day + "-" + month + "-" + year;
+        return LocalDate.of(year, month, day).toString();
     }
     public void openDatePicker(View view) {
         datePickerDialog.show();
