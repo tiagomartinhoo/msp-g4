@@ -36,8 +36,7 @@ public class PostData extends AsyncTask<String, Void, JSONObject> {
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("POST");
 
-            // Replace "someAuthString" with the actual authorization header value you need
-            urlConnection.setRequestProperty("Authorization", "someAuthString");
+            // urlConnection.setRequestProperty("Authorization", "someAuthString");
 
             if (this.postData != null) {
                 OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
@@ -62,11 +61,11 @@ public class PostData extends AsyncTask<String, Void, JSONObject> {
                 }
 
             } else {
-                Log.i("ERRO", "" + statusCode);
+                Log.i("ERROR", "" + statusCode);
             }
 
         } catch (Exception e) {
-            Log.d("ERRO", e.getLocalizedMessage());
+            Log.d("ERROR", e.getLocalizedMessage());
             return obj;
         }
 

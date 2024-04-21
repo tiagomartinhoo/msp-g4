@@ -2,7 +2,6 @@ package com.myclinic;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -17,9 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.shuhart.stepview.StepView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
