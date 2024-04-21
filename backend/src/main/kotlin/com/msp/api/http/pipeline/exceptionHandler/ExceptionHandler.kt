@@ -2,6 +2,7 @@
 package com.msp.api.http.pipeline.exceptionHandler
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+import com.mongodb.MongoWriteException
 import com.msp.api.http.pipeline.authentication.jwt.message
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.BadRequest
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.Conflict
@@ -11,6 +12,7 @@ import com.msp.api.http.pipeline.exceptionHandler.exceptions.UnauthorizedRequest
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.JwtException
 import jakarta.servlet.http.HttpServletRequest
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -52,6 +54,15 @@ class ExceptionHandler {
     ): ResponseEntity<Any> =
         Problem(
             title = ex.message ?: "Conflict",
+            status = HttpStatus.CONFLICT.value()
+        ).toResponseEntity()
+
+    @ExceptionHandler(value = [DuplicateKeyException::class])
+    fun handleAlreadyCheckIn(request: HttpServletRequest,
+                             ex: Exception
+    ): ResponseEntity<Any> =
+        Problem(
+            title = "You are Already CheckIn",
             status = HttpStatus.CONFLICT.value()
         ).toResponseEntity()
 

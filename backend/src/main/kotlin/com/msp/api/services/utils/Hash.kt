@@ -1,4 +1,4 @@
-package orion.app.services.utils
+package com.msp.api.services.utils
 
 import java.math.BigInteger
 import java.security.MessageDigest

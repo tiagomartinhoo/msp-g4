@@ -1,5 +1,6 @@
 package com.msp.api.http.controllers.users
 
+import com.msp.api.domain.User
 import com.msp.api.http.Uris
 import com.msp.api.http.controllers.users.models.CreateDoctorInput
 import com.msp.api.http.controllers.users.models.CreateUserOutput
@@ -7,6 +8,7 @@ import com.msp.api.http.controllers.users.models.DoctorOutput
 import com.msp.api.http.controllers.users.models.DoctorsOutput
 import com.msp.api.http.controllers.users.models.UpdateDoctorInput
 import com.msp.api.http.pipeline.authentication.Authentication
+import com.msp.api.http.pipeline.exceptionHandler.exceptions.NotYourAccount
 import com.msp.api.services.DoctorsService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -50,18 +52,26 @@ class DoctorsController(private val doctorsService: DoctorsService) {
         return ResponseEntity.ok(doctorsService.getDoctors(text, page, size))
     }
 
+    @Authentication
     @PutMapping(Uris.DOCTOR_BY_ID)
     fun updateDoctor(
         @PathVariable dID: String,
-        @RequestBody updateDoctorInput: UpdateDoctorInput
+        @RequestBody updateDoctorInput: UpdateDoctorInput,
+        user : User
     ): ResponseEntity<DoctorOutput> {
+
+        if(dID != user.uId) throw NotYourAccount()
+
         return ResponseEntity.ok(doctorsService.updateDoctor(dID, updateDoctorInput))
     }
 
+    @Authentication
     @DeleteMapping(Uris.DOCTOR_BY_ID)
     fun deleteDoctor(
-        @PathVariable dID: String
+        @PathVariable dID: String,
+        user : User
     ): ResponseEntity<Unit> {
+        if(dID != user.uId) throw NotYourAccount()
         doctorsService.deleteDoctor(dID)
         return ResponseEntity.status(HttpStatus.OK).build()
     }

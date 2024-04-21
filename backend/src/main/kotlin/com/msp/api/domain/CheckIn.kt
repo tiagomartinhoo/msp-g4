@@ -3,9 +3,9 @@ package com.msp.api.domain
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
-@Document("db_sequence")
-data class DBSequence(
+@Document("checkIn")
+data class CheckIn(
     @Id
-    val id: String,
-    val seq: Int
+    val pID: String,
+    val value: Int
 )

@@ -20,7 +20,7 @@ import com.msp.api.storage.repo.UsersRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
-import orion.app.services.utils.Hash
+import com.msp.api.services.utils.Hash
 import java.util.*
 
 @Service

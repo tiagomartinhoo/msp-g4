@@ -4,3 +4,5 @@ abstract class UnauthorizedRequest(msg: String) : Exception(msg)
 
 class Unauthenticated : UnauthorizedRequest("Unauthenticated")
 class LoginFailed : UnauthorizedRequest("The credentials do not match")
+
+class NotYourAccount : UnauthorizedRequest("Not Your Account")
