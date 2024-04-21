@@ -21,6 +21,9 @@ public class PostData extends AsyncTask<String, Void, JSONObject> {
         this.postData = postData;
     }
 
+    /**
+     @param urls urls[0]: endpoint, urls[1]: token
+     */
     @Override
     protected JSONObject doInBackground(String... urls) {
         try {
@@ -34,7 +37,9 @@ public class PostData extends AsyncTask<String, Void, JSONObject> {
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("POST");
 
-            // urlConnection.setRequestProperty("Authorization", "someAuthString");
+            if (urls.length > 1) {
+                urlConnection.setRequestProperty("Authorization", "Bearer " + urls[1]);
+            }
 
             if (this.postData != null) {
                 OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
