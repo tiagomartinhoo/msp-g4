@@ -80,4 +80,7 @@ public class MainActivity extends AppCompatActivity {
     public void Schedule(View view) {
         startActivity(new Intent(MainActivity.this,BookVisit.class));
     }
+
+    public void Logout(View view) {
+    }
 }
