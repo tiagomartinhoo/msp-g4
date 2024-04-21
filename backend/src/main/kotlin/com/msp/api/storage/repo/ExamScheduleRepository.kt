@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 
 @Repository
-interface ExamScheduleRepository : MongoRepository<ExamSchedule, String>
+interface ExamScheduleRepository : MongoRepository<ExamSchedule, String>{
+    fun findBypID(pID : String) : List<ExamSchedule>
+}

@@ -30,7 +30,7 @@ class AppointmentsController(private val service : AppointmentsService) {
 
         if(pID != user.uId) throw NotYourAccount()
 
-        val aiD = service.createAppointment(appointmentCreation)
+        val aiD = service.createAppointment(pID,appointmentCreation)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(EntityCreationOutput(aiD))
 

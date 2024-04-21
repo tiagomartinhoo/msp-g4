@@ -9,6 +9,8 @@ interface AppointmentsRepository : MongoRepository<Appointment, String>{
 
     fun findByaID(aID: String) : Appointment?
 
+    fun findBypID(pID: String) : List<Appointment>
+
 
 
 

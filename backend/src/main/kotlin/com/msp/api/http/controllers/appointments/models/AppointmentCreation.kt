@@ -6,7 +6,6 @@ import java.time.LocalDateTime
 
 data class AppointmentCreation(
     val dID : String,
-    val pID : String,
     val serviceID : String,
     val timeOfAppointment : LocalDateTime
 )

@@ -16,7 +16,7 @@ import java.util.UUID
 @Service
 class AppointmentsService(private val repo : AppointmentsRepository, val servicesRepo : ServicesRepo) {
 
-    fun createAppointment(appointmentCreation: AppointmentCreation) : String{
+    fun createAppointment(pID : String, appointmentCreation: AppointmentCreation) : String{
 
         val aId = UUID.randomUUID().toString()
 
@@ -25,7 +25,7 @@ class AppointmentsService(private val repo : AppointmentsRepository, val service
         val appointment = Appointment(
             aId,
             appointmentCreation.dID,
-            appointmentCreation.pID,
+            pID,
             appointmentCreation.serviceID,
             appointmentCreation.timeOfAppointment,
             LocalDateTime.now(),
