@@ -1,0 +1,799 @@
+{
+	"info": {
+		"_postman_id": "d9938dce-ab3d-46ff-a9cd-973442c5f6aa",
+		"name": "MyClinic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33842493",
+		"_collection_link": "https://msp-g4.postman.co/workspace/Team-Workspace~8030939d-50e2-44d5-8c29-5bde944574dc/collection/33842493-d9938dce-ab3d-46ff-a9cd-973442c5f6aa?action=share&source=collection_link&creator=33842493"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Patients",
+					"item": [
+						{
+							"name": "Create Patient",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Patient4789\",\r\n    \"email\": \"patient798@gmail.com\",\r\n    \"phoneNumber\": \"+351911145678\",\r\n    \"password\": \"nYEiMI#IakQ5I{k\",\r\n    \"nif\": \"51161223\",\r\n    \"birthDate\": \"2002-02-03\",\r\n    \"address\": \"Chelas\",\r\n    \"insurance\": \"Multicare\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/rest/users/patients",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Patient",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/rest/users/patients/{{pID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"patients",
+										"{{pID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Patients",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/rest/users/patients",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"patients"
+									],
+									"query": [
+										{
+											"key": "text",
+											"value": "Test",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "10",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Patient",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Patient2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/rest/users/patients/{{pID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"patients",
+										"{{pID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Patient",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/rest/users/patients/{{pID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"patients",
+										"{{pID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CheckIn",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/rest/users/patients/{{pID}}/checkIn",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"patients",
+										"{{pID}}",
+										"checkIn"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Doctors",
+					"item": [
+						{
+							"name": "Create Doctor",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Doctor2\",\r\n    \"email\": \"doctor2@gmail.com\",\r\n    \"phoneNumber\": \"+351912345678\",\r\n    \"password\": \"nYEiMI#IakQ5I{k\",\r\n    \"nif\": \"516\",\r\n    \"specialty\": \"Orthopedic\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/rest/users/doctors",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"doctors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Doctor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/rest/users/doctors/{{dID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"doctors",
+										"{{dID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Doctors",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/rest/users/doctors",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"doctors"
+									],
+									"query": [
+										{
+											"key": "text",
+											"value": "Test",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "2",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Doctor",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Doctor1\",\r\n    \"phoneNumber\": \"+351912345678\",\r\n    \"password\": \"nYEiMI#IakQ5I{j\",\r\n    \"specialty\": \"Oncology\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/rest/users/doctors/{{dID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"doctors",
+										"{{dID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Doctor",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/rest/users/doctors/{{dID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"rest",
+										"users",
+										"doctors",
+										"{{dID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"tiago@gmail.com\",\r\n    \"password\": \"Password2002@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/rest/users/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "Get Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/services/6624333d0c765121a4791192",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"services",
+								"6624333d0c765121a4791192"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/services",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"services"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "Create Appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dID\" : \"8928f219-28ed-40cb-8b48-276aab8d652a\",\r\n    \"serviceID\" : \"6624333d0c765121a479119c\",\r\n    \"timeOfAppointment\" : \"2024-04-20T12:30:45\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/appointments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/appointments/45603496-68a6-4f5d-b35f-30461b8af44d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"appointments",
+								"45603496-68a6-4f5d-b35f-30461b8af44d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Appointment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dId\" : \"THIS IS A ID OF A DOCTOR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/appointments/{{appointmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"appointments",
+								"{{appointmentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Appointment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/appointments/{{appointmentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"appointments",
+								"{{appointmentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exam",
+			"item": [
+				{
+					"name": "Get Exam",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/exams/662434e90c765121a47911a9",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"exams",
+								"662434e90c765121a47911a9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Exams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/exams",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"exams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Schedule Exam",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"examID\" : \"662434e90c765121a47911a9\",\r\n    \"examDateTime\" : \"1999-04-20T12:30:45\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/exams",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"exams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requested Exam By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/exams/4b82925c-b27b-4450-817a-a630394a6bed",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"exams",
+								"4b82925c-b27b-4450-817a-a630394a6bed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Exam Requested",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\" : \"2020-04-20T12:30:45\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/exams/4b82925c-b27b-4450-817a-a630394a6bed",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"exams",
+								"4b82925c-b27b-4450-817a-a630394a6bed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/exams/4b82925c-b27b-4450-817a-a630394a6bed",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"exams",
+								"4b82925c-b27b-4450-817a-a630394a6bed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySUQiOiI4OTI4ZjIxOS0yOGVkLTQwY2ItOGI0OC0yNzZhYWI4ZDY1MmEiLCJyb2xlIjoiRE9DVE9SIiwiZXhwIjoxNzEzNTYwMDg5fQ.1A8vAOnbHsY5g8YbLUQbEKlclxGVgj9QpnnISvBSHkB1iVODK61Mev2dDuwTy2tmJ8mQzrfYDZsiL8pyVWsLDw",
+			"type": "string"
+		},
+		{
+			"key": "pID",
+			"value": "761b8a0b-4b8e-4356-a258-caafdaec2d99",
+			"type": "string"
+		},
+		{
+			"key": "dID",
+			"value": "8928f219-28ed-40cb-8b48-276aab8d652a",
+			"type": "string"
+		},
+		{
+			"key": "appointmentId",
+			"value": "50f93827-cdbd-4caa-acf1-216f8cc5c8d0",
+			"type": "string"
+		},
+		{
+			"key": "patient2",
+			"value": "2bffadd5-8ff3-4c03-85bf-f41f8f701f46",
+			"type": "string"
+		},
+		{
+			"key": "token2",
+			"value": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySUQiOiIyYmZmYWRkNS04ZmYzLTRjMDMtODViZi1mNDFmOGY3MDFmNDYiLCJyb2xlIjoiUEFUSUVOVCIsImV4cCI6MTcxMzc1NDQ2N30.3c3rrDya4iDmsHDFz3dTdjc41k3Ra0cav3PntzQtxVEmV7oDMrqIazq0AEKggxE2kFvFL6gdUi7oyT_0oCRtxw",
+			"type": "string"
+		},
+		{
+			"key": "appointmentID",
+			"value": "45603496-68a6-4f5d-b35f-30461b8af44d",
+			"type": "string"
+		},
+		{
+			"key": "examID",
+			"value": "0e58006f-bc27-4bed-8064-575c302cb1ff",
+			"type": "string"
+		}
+	]
+}
