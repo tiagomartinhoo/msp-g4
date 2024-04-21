@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.myclinic.Downloader.Endpoints;
-import com.myclinic.Downloader.PostData;
+import com.myclinic.http.Endpoints;
+import com.myclinic.http.PostData;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +22,7 @@ public class Login extends AppCompatActivity {
     private EditText editTextEmail, editTextPw;
     private Button button;
     private ProgressBar progressBar;
-    private final String URL = Endpoints.LOGIN_ENDPOINT;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class Login extends AppCompatActivity {
                             handleLoginResponse(result);
                         }
                     };
-                    task.execute(URL);
+                    task.execute(Endpoints.LOGIN_ENDPOINT);
                 }
             }
 
@@ -109,7 +109,16 @@ public class Login extends AppCompatActivity {
                     startMainActivity();
                 } else {
                     // Login unsuccessful
-                    Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_SHORT).show();
+                    try {
+                        if (result != null && result.has("title") && result.has("status")) {
+                            Toast.makeText(getApplicationContext(), result.getString("title"), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 }
             }
 

@@ -1,11 +1,8 @@
-package com.myclinic.Downloader;
+package com.myclinic.http;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,22 +11,19 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
 
-public class PostData2 extends AsyncTask<String, Void, JSONArray> {
-    JSONObject postData;
-    JSONArray arr = null;
+public class PostData extends AsyncTask<String, Void, JSONObject> {
+    private JSONObject postData;
+    private JSONObject obj = null;
 
-    public PostData2(Map<String, String> postData) {
-        if (postData != null) {
-            this.postData = new JSONObject(postData);
-        }
+    // Change the constructor to accept a JSONObject
+    public PostData(JSONObject postData) {
+        this.postData = postData;
     }
 
     @Override
-    protected JSONArray doInBackground(String... urls) {
+    protected JSONObject doInBackground(String... urls) {
         try {
-
             URL url = new URL(urls[0]);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -40,7 +34,7 @@ public class PostData2 extends AsyncTask<String, Void, JSONArray> {
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("POST");
 
-            urlConnection.setRequestProperty("Authorization", "someAuthString");
+            // urlConnection.setRequestProperty("Authorization", "someAuthString");
 
             if (this.postData != null) {
                 OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
@@ -49,36 +43,41 @@ public class PostData2 extends AsyncTask<String, Void, JSONArray> {
             }
 
             int statusCode = urlConnection.getResponseCode();
+            Log.i("STATUS", String.valueOf(statusCode));
 
+            InputStream inputStream;
             if (statusCode == 200 || statusCode == 201) {
-
-                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-
-                String response = convertInputStreamToString(inputStream);
-                Log.i("RESULT", response);
-
-                arr = new JSONArray(response);
-                Log.e("criado com sucesso",""+arr.toString());
-
+                inputStream = urlConnection.getInputStream();
             } else {
-                // Quando o código não devolve o 200
-                Log.i("ERRO", ""+statusCode);
+                inputStream = urlConnection.getErrorStream();
+            }
+            InputStream responseStream = new BufferedInputStream(inputStream);
+
+            String response = convertInputStreamToString(responseStream);
+            Log.i("RESULT", response);
+
+            // Check if the response is a JSON array or object
+            try {
+                obj = new JSONObject(response);
+            } catch (Exception e) {
+                // If it's not a JSON object, try to parse it as an array
+                obj = null;
             }
 
         } catch (Exception e) {
-            Log.d("ERRO", e.getLocalizedMessage());
-            return arr;
+            Log.d("ERROR", e.getLocalizedMessage());
+            return obj;
         }
 
-        return arr;
+        return obj;
     }
 
     private String convertInputStreamToString(InputStream inputStream) {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder sb = new StringBuilder();
         String line;
         try {
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
             }
         } catch (IOException e) {
