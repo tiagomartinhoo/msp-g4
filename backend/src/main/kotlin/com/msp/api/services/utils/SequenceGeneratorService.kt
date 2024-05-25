@@ -17,6 +17,5 @@ class SequenceGeneratorService {
         val query = Query(Criteria.where("id").`is`(sequenceName))
         val dbSequence: CheckIn? = mongoOperations?.findOne(query, CheckIn::class.java)
         return dbSequence?.value ?: 0
-
     }
 }

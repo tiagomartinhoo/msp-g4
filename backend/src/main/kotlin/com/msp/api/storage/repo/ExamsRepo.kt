@@ -5,4 +5,4 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ExamsRepo : MongoRepository<Exam,String>
+interface ExamsRepo : MongoRepository<Exam, String>

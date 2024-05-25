@@ -6,11 +6,10 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document("services")
 data class Service(
     @Id
-    val id : String,
-    val name : String,
-    val price : Float,
-    val description : String
+    val id: String,
+    val name: String,
+    val price: Float,
+    val description: String
 )
 
-data class ListOfServices(val services : List<Service>)
-
+data class ListOfServices(val services: List<Service>)

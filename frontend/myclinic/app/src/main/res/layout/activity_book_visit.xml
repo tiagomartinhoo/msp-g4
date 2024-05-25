@@ -143,11 +143,11 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textTitlePC"
+                android:id="@+id/textTitleService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="Specialty *"
+                android:text="Service *"
                 android:textColor="@color/dark_grey"
                 android:textSize="13dp"
                 android:layout_marginTop="10dp"
@@ -163,7 +163,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/spinner_general"
                 android:gravity="center_vertical"
-                app:layout_constraintTop_toBottomOf="@+id/textTitlePC"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleService"
                 tools:layout_editor_absoluteX="20dp"/>
 
             <TextView

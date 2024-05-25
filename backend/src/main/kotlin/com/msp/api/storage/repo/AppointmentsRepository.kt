@@ -5,13 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AppointmentsRepository : MongoRepository<Appointment, String>{
+interface AppointmentsRepository : MongoRepository<Appointment, String> {
 
-    fun findByaID(aID: String) : Appointment?
+    fun findByaID(aID: String): Appointment?
 
-    fun findBypID(pID: String) : List<Appointment>
-
-
-
-
+    fun findBypID(pID: String): List<Appointment>
 }

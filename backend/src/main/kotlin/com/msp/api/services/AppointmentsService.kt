@@ -14,10 +14,9 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
-class AppointmentsService(private val repo : AppointmentsRepository, val servicesRepo : ServicesRepo) {
+class AppointmentsService(private val repo: AppointmentsRepository, val servicesRepo: ServicesRepo) {
 
-    fun createAppointment(pID : String, appointmentCreation: AppointmentCreation) : String{
-
+    fun createAppointment(pID: String, appointmentCreation: AppointmentCreation): String {
         val aId = UUID.randomUUID().toString()
 
         servicesRepo.findByIdOrNull(appointmentCreation.serviceID) ?: throw ServiceNotFound()
@@ -28,40 +27,34 @@ class AppointmentsService(private val repo : AppointmentsRepository, val service
             pID,
             appointmentCreation.serviceID,
             appointmentCreation.timeOfAppointment,
-            LocalDateTime.now(),
-            )
-
+            LocalDateTime.now()
+        )
 
         repo.insert(appointment)
 
         return aId
-
     }
 
-    fun getAppointment(aID : String) : Appointment{
-
+    fun getAppointment(aID: String): Appointment {
         return repo.findByaID(aID) ?: throw AppointmentNotFound()
     }
 
-    fun updateAppointment(aID : String,appointmentUpdate: AppointmentUpdate){
-
+    fun updateAppointment(aID: String, appointmentUpdate: AppointmentUpdate) {
         val appointment = getAppointment(aID)
 
-        repo.save(appointment.copy(
-            dID = appointmentUpdate.dId ?: appointment.dID,
-            timeOfAppointment = appointmentUpdate.timeOfAppointment ?: appointment.timeOfAppointment
-        ))
+        repo.save(
+            appointment.copy(
+                dID = appointmentUpdate.dId ?: appointment.dID,
+                timeOfAppointment = appointmentUpdate.timeOfAppointment ?: appointment.timeOfAppointment
+            )
+        )
     }
 
-    fun deleteAppointment(aID: String, pID : String){
-
+    fun deleteAppointment(aID: String, pID: String) {
         val appointment = getAppointment(aID)
 
-        if(appointment.pID != pID) throw NotYourAppointment()
+        if (appointment.pID != pID) throw NotYourAppointment()
 
         repo.deleteById(aID)
-
     }
-
-
 }

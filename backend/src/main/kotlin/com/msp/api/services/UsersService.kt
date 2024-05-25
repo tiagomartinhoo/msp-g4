@@ -14,13 +14,13 @@ import com.msp.api.http.pipeline.exceptionHandler.exceptions.EmailAlreadyExists
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.LoginFailed
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.NifAlreadyExists
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.UserNotFound
+import com.msp.api.services.utils.Hash
 import com.msp.api.services.utils.ServiceUtils
 import com.msp.api.storage.cloud.CloudStorageUtils
 import com.msp.api.storage.repo.UsersRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
-import com.msp.api.services.utils.Hash
 import java.util.*
 
 @Service

@@ -2,7 +2,6 @@
 package com.msp.api.http.pipeline.exceptionHandler
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
-import com.mongodb.MongoWriteException
 import com.msp.api.http.pipeline.authentication.jwt.message
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.BadRequest
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.Conflict
@@ -58,8 +57,9 @@ class ExceptionHandler {
         ).toResponseEntity()
 
     @ExceptionHandler(value = [DuplicateKeyException::class])
-    fun handleAlreadyCheckIn(request: HttpServletRequest,
-                             ex: Exception
+    fun handleAlreadyCheckIn(
+        request: HttpServletRequest,
+        ex: Exception
     ): ResponseEntity<Any> =
         Problem(
             title = "You are Already CheckIn",

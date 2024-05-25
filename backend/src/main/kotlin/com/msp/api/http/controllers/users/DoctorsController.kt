@@ -57,10 +57,9 @@ class DoctorsController(private val doctorsService: DoctorsService) {
     fun updateDoctor(
         @PathVariable dID: String,
         @RequestBody updateDoctorInput: UpdateDoctorInput,
-        user : User
+        user: User
     ): ResponseEntity<DoctorOutput> {
-
-        if(dID != user.uId) throw NotYourAccount()
+        if (dID != user.uId) throw NotYourAccount()
 
         return ResponseEntity.ok(doctorsService.updateDoctor(dID, updateDoctorInput))
     }
@@ -69,9 +68,9 @@ class DoctorsController(private val doctorsService: DoctorsService) {
     @DeleteMapping(Uris.DOCTOR_BY_ID)
     fun deleteDoctor(
         @PathVariable dID: String,
-        user : User
+        user: User
     ): ResponseEntity<Unit> {
-        if(dID != user.uId) throw NotYourAccount()
+        if (dID != user.uId) throw NotYourAccount()
         doctorsService.deleteDoctor(dID)
         return ResponseEntity.status(HttpStatus.OK).build()
     }

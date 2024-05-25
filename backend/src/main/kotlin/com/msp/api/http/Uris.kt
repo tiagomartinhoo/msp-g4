@@ -17,7 +17,6 @@ object Uris {
 
     const val CHECK_IN = "$PATIENTS/{pID}/checkIn"
 
-
     // DOCTORS
     const val DOCTORS = "$USERS/doctors"
 

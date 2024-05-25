@@ -10,4 +10,3 @@ class InvalidPage : BadRequest("Page must be greater than or equal to 0")
 class InvalidSize : BadRequest("Size must be greater than or equal to 1")
 
 class NoAppointmentsOrExams : BadRequest("You don't have any appointments or exams today")
-

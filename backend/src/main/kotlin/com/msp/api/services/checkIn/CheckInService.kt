@@ -13,37 +13,34 @@ import java.time.LocalDateTime
 
 @Service
 class CheckInService(
-    private val repo : CheckInRepository,
+    private val repo: CheckInRepository,
     private val appointmentsRepository: AppointmentsRepository,
     private val examScheduleRepository: ExamScheduleRepository
 ) {
 
-    fun checkIn(pID : String) : Int {
-
-        if(repo.findByIdOrNull(pID) != null){
+    fun checkIn(pID: String): Int {
+        if (repo.findByIdOrNull(pID) != null) {
             throw AlreadyCheckIn()
         }
 
         val now = LocalDateTime.now()
 
-        val patientAppointments = appointmentsRepository.findBypID(pID).filter { it.timeOfAppointment.dayOfYear == now.dayOfYear}
+        val patientAppointments = appointmentsRepository.findBypID(pID).filter { it.timeOfAppointment.dayOfYear == now.dayOfYear }
 
-        val patientExams = examScheduleRepository.findBypID(pID).filter{ it.timeOfExam.dayOfYear == now.dayOfYear }
+        val patientExams = examScheduleRepository.findBypID(pID).filter { it.timeOfExam.dayOfYear == now.dayOfYear }
 
-        if(patientAppointments.isEmpty() && patientExams.isEmpty()) throw NoAppointmentsOrExams()
+        if (patientAppointments.isEmpty() && patientExams.isEmpty()) throw NoAppointmentsOrExams()
 
-        patientAppointments.map { appointment -> appointmentsRepository.save(appointment.copy(timeCheckIn = now))}
+        patientAppointments.map { appointment -> appointmentsRepository.save(appointment.copy(timeCheckIn = now)) }
 
         patientExams.map { examSchedule -> examScheduleRepository.save(examSchedule.copy(timeCheckIn = now)) }
 
-        val state =  repo.count().toInt()
+        val state = repo.count().toInt()
 
-        repo.insert(CheckIn(pID,state + 1))
+        repo.insert(CheckIn(pID, state + 1))
 
         return state + 1
     }
 
-    fun getCheckInState(pID : String) : Int = repo.findByIdOrNull(pID)?.value ?: throw NotCheckIn()
-
-
+    fun getCheckInState(pID: String): Int = repo.findByIdOrNull(pID)?.value ?: throw NotCheckIn()
 }

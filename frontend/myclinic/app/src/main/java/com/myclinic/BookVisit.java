@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class BookVisit extends AppCompatActivity {
@@ -71,7 +73,7 @@ public class BookVisit extends AppCompatActivity {
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
     }
     private String makeDateString(int day, int month, int year) {
-        return day + "-" + month + "-" + year;
+        return LocalDate.of(year, month, day).toString();
     }
     public void openDatePicker(View view) {
         datePickerDialog.show();
