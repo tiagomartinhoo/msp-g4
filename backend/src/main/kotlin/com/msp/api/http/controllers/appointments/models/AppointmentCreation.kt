@@ -25,3 +25,13 @@ data class Appointment(
     val canceled: Boolean = false,
     val cancellationReason: String = ""
 )
+
+fun Appointment.toOutput() = AppointmentOutput(
+    aID = aID,
+    dID = dID,
+    pID = pID,
+    serviceID = serviceID,
+    timeOfAppointment = timeOfAppointment,
+    timeCreated = timeCreated,
+    timeStarted = timeStarted
+)

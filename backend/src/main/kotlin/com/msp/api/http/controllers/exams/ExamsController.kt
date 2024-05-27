@@ -6,6 +6,7 @@ import com.msp.api.http.controllers.appointments.models.EntityCreationOutput
 import com.msp.api.http.controllers.exams.domain.ExamCreation
 import com.msp.api.http.controllers.exams.domain.ExamSchedule
 import com.msp.api.http.controllers.exams.domain.ExamScheduledUpdate
+import com.msp.api.http.controllers.exams.domain.ExamsScheduleOutput
 import com.msp.api.http.controllers.services.domain.Exam
 import com.msp.api.http.controllers.services.domain.ListOfExams
 import com.msp.api.http.pipeline.authentication.Authentication
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -54,6 +56,15 @@ class ExamsController(private val service: ExamsService) {
         return ResponseEntity.ok(service.getExamScheduled(eID))
     }
 
+    @GetMapping(Uris.SCHEDULE_EXAM)
+    fun getExamsOfPatient(
+        @RequestParam(required = false, defaultValue = DEFAULT_PAGE) page: Int,
+        @RequestParam(required = false, defaultValue = DEFAULT_SIZE) size: Int,
+        @PathVariable pID: String
+    ): ResponseEntity<ExamsScheduleOutput> {
+        return ResponseEntity.ok(service.getExamsOfPatient(pID, page, size))
+    }
+
     @Authentication
     @PutMapping(Uris.SCHEDULED_EXAM_BY_ID)
     fun updateExam(@PathVariable eID: String, @PathVariable pID: String, @RequestBody scheduledUpdate: ExamScheduledUpdate, user: User): ResponseEntity<Nothing> {
@@ -72,5 +83,10 @@ class ExamsController(private val service: ExamsService) {
         service.deleteExam(eID, pID)
 
         return ResponseEntity.ok().build()
+    }
+
+    companion object {
+        const val DEFAULT_PAGE = "0"
+        const val DEFAULT_SIZE = "10"
     }
 }

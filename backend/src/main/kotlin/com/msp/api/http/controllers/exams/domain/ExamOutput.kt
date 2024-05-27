@@ -1,12 +1,8 @@
 package com.msp.api.http.controllers.exams.domain
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 
-@Document("examSchedule")
-data class ExamSchedule(
-    @Id
+data class ExamScheduleOutput(
     val id: String,
     val eID: String,
     val pID: String,
@@ -19,13 +15,7 @@ data class ExamSchedule(
     val cancellationReason: String = ""
 )
 
-fun ExamSchedule.toOutput() = ExamScheduleOutput(
-    id = id,
-    eID = eID,
-    pID = pID,
-    timeOfExam = timeOfExam,
-    timeCreated = timeCreated,
-    timeStarted = timeStarted,
-    timeEnded = timeEnded,
-    timeCheckIn = timeCheckIn
+data class ExamsScheduleOutput(
+    val pageCount: Int,
+    val list: List<ExamScheduleOutput>
 )
