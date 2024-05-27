@@ -1,16 +1,18 @@
-package com.msp.api.http.controllers.exams.domain
+package com.msp.api.domain
 
+import com.msp.api.http.controllers.appointments.models.AppointmentOutput
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 
-@Document("examSchedule")
-data class ExamSchedule(
+@Document("appointments")
+data class Appointment(
     @Id
-    val id: String,
-    val eID: String,
+    val aID: String,
+    val dID: String,
     val pID: String,
-    val timeOfExam: LocalDateTime,
+    val serviceID: String,
+    val timeOfAppointment: LocalDateTime,
     val timeCreated: LocalDateTime,
     val timeStarted: LocalDateTime? = null,
     val timeEnded: LocalDateTime? = null,
@@ -19,13 +21,16 @@ data class ExamSchedule(
     val cancellationReason: String = ""
 )
 
-fun ExamSchedule.toOutput() = ExamScheduleOutput(
-    id = id,
-    eID = eID,
+fun Appointment.toOutput() = AppointmentOutput(
+    aID = aID,
+    dID = dID,
     pID = pID,
-    timeOfExam = timeOfExam,
+    serviceID = serviceID,
+    timeOfAppointment = timeOfAppointment,
     timeCreated = timeCreated,
     timeStarted = timeStarted,
     timeEnded = timeEnded,
-    timeCheckIn = timeCheckIn
+    timeCheckIn = timeCheckIn,
+    canceled = canceled,
+    cancellationReason = cancellationReason
 )

@@ -2,7 +2,7 @@ package com.msp.api.http.controllers.checkIn
 
 import com.msp.api.domain.User
 import com.msp.api.http.Uris
-import com.msp.api.http.controllers.checkIn.domain.CheckInOutput
+import com.msp.api.http.controllers.checkIn.models.CheckInOutput
 import com.msp.api.http.pipeline.authentication.Authentication
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.NotYourAccount
 import com.msp.api.services.checkIn.CheckInService

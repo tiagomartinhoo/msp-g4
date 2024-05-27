@@ -1,6 +1,6 @@
 package com.msp.api.storage.repo
 
-import com.msp.api.http.controllers.appointments.models.Appointment
+import com.msp.api.domain.Appointment
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.mongodb.repository.MongoRepository

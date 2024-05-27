@@ -1,10 +1,10 @@
 package com.msp.api.services
 
-import com.msp.api.http.controllers.appointments.models.Appointment
+import com.msp.api.domain.Appointment
+import com.msp.api.domain.toOutput
 import com.msp.api.http.controllers.appointments.models.AppointmentCreation
 import com.msp.api.http.controllers.appointments.models.AppointmentUpdate
 import com.msp.api.http.controllers.appointments.models.AppointmentsOutput
-import com.msp.api.http.controllers.appointments.models.toOutput
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.AppointmentNotFound
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.NotYourAppointment
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.ServiceNotFound
@@ -72,6 +72,17 @@ class AppointmentsService(
             appointment.copy(
                 dID = appointmentUpdate.dId ?: appointment.dID,
                 timeOfAppointment = appointmentUpdate.timeOfAppointment ?: appointment.timeOfAppointment
+            )
+        )
+    }
+
+    fun cancelAppointment(aID: String, reason: String?) {
+        val appointment = getAppointment(aID)
+
+        repo.save(
+            appointment.copy(
+                canceled = true,
+                cancellationReason = reason ?: appointment.cancellationReason
             )
         )
     }

@@ -1,14 +1,14 @@
 package com.msp.api.http.controllers.exams
 
+import com.msp.api.domain.Exam
+import com.msp.api.domain.ExamSchedule
 import com.msp.api.domain.User
 import com.msp.api.http.Uris
 import com.msp.api.http.controllers.appointments.models.EntityCreationOutput
-import com.msp.api.http.controllers.exams.domain.ExamCreation
-import com.msp.api.http.controllers.exams.domain.ExamSchedule
-import com.msp.api.http.controllers.exams.domain.ExamScheduledUpdate
-import com.msp.api.http.controllers.exams.domain.ExamsScheduleOutput
-import com.msp.api.http.controllers.services.domain.Exam
-import com.msp.api.http.controllers.services.domain.ListOfExams
+import com.msp.api.http.controllers.exams.models.ExamCreation
+import com.msp.api.http.controllers.exams.models.ExamScheduledUpdate
+import com.msp.api.http.controllers.exams.models.ExamsScheduleOutput
+import com.msp.api.http.controllers.services.models.ListOfExams
 import com.msp.api.http.pipeline.authentication.Authentication
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.NotYourAccount
 import com.msp.api.services.ExamsService

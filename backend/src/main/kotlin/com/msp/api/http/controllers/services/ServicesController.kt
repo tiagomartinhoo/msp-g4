@@ -1,8 +1,8 @@
 package com.msp.api.http.controllers.services
 
+import com.msp.api.domain.Service
 import com.msp.api.http.Uris
-import com.msp.api.http.controllers.services.domain.ListOfServices
-import com.msp.api.http.controllers.services.domain.Service
+import com.msp.api.http.controllers.services.models.ListOfServices
 import com.msp.api.services.ServicesAvailableService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

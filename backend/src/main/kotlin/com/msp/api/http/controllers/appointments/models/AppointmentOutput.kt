@@ -9,11 +9,11 @@ data class AppointmentOutput(
     val serviceID: String,
     val timeOfAppointment: LocalDateTime,
     val timeCreated: LocalDateTime,
-    val timeStarted: LocalDateTime? = null,
-    val timeEnded: LocalDateTime? = null,
-    val timeCheckIn: LocalDateTime? = null,
-    val canceled: Boolean = false,
-    val cancellationReason: String = ""
+    val timeStarted: LocalDateTime?,
+    val timeEnded: LocalDateTime?,
+    val timeCheckIn: LocalDateTime?,
+    val canceled: Boolean,
+    val cancellationReason: String
 )
 
 data class AppointmentsOutput(

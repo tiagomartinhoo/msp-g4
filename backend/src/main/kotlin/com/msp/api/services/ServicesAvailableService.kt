@@ -1,6 +1,6 @@
 package com.msp.api.services
 
-import com.msp.api.http.controllers.services.domain.Service
+import com.msp.api.domain.Service
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.ServiceNotFound
 import com.msp.api.storage.repo.ExamsRepo
 import com.msp.api.storage.repo.ServicesRepo

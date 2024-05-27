@@ -1,11 +1,11 @@
 package com.msp.api.services
 
-import com.msp.api.http.controllers.exams.domain.ExamCreation
-import com.msp.api.http.controllers.exams.domain.ExamSchedule
-import com.msp.api.http.controllers.exams.domain.ExamScheduledUpdate
-import com.msp.api.http.controllers.exams.domain.ExamsScheduleOutput
-import com.msp.api.http.controllers.exams.domain.toOutput
-import com.msp.api.http.controllers.services.domain.Exam
+import com.msp.api.domain.Exam
+import com.msp.api.domain.ExamSchedule
+import com.msp.api.domain.toOutput
+import com.msp.api.http.controllers.exams.models.ExamCreation
+import com.msp.api.http.controllers.exams.models.ExamScheduledUpdate
+import com.msp.api.http.controllers.exams.models.ExamsScheduleOutput
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.ExamNotFound
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.NotYourExam
 import com.msp.api.services.utils.ServiceUtils
