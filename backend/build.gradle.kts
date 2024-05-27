@@ -35,6 +35,8 @@ dependencies {
     implementation("com.google.cloud:google-cloud-storage:2.20.1")
 
     implementation("com.google.cloud.tools:appengine-gradle-plugin:2.8.0")
+    1
+    implementation("com.mailjet:mailjet-client:5.2.0")
 }
 
 tasks.withType<KotlinCompile> {

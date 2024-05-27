@@ -11,9 +11,11 @@ import com.msp.api.http.pipeline.exceptionHandler.exceptions.WeakPassword
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Component
+import java.security.SecureRandom
 import java.time.LocalDate
 import java.time.Period
 import java.util.*
+import kotlin.random.asKotlinRandom
 
 @Component
 class ServiceUtils(
@@ -58,4 +60,35 @@ class ServiceUtils(
     }
 
     fun sortDirection(direction: String) = Sort.Direction.entries.find { direction == it.name } ?: Sort.DEFAULT_DIRECTION
+
+    fun generateSecurePassword(length: Int, requireUppercase: Boolean = true, requireDigits: Boolean = true, requireSpecialChars: Boolean = true): String {
+        val secureRandom = SecureRandom().asKotlinRandom()
+        val password = StringBuilder()
+
+        val lowercaseChars = "abcdefghijklmnopqrstuvwxyz"
+        val uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        val digitChars = "0123456789"
+        val specialChars = "@#$%^&+="
+
+        val allChars = StringBuilder(lowercaseChars)
+
+        if (requireUppercase) {
+            password.append(uppercaseChars.random(secureRandom))
+            allChars.append(uppercaseChars)
+        }
+        if (requireDigits) {
+            password.append(digitChars.random(secureRandom))
+            allChars.append(digitChars)
+        }
+        if (requireSpecialChars) {
+            password.append(specialChars.random(secureRandom))
+            allChars.append(specialChars)
+        }
+
+        while (password.length < length) {
+            password.append(allChars.random(secureRandom))
+        }
+
+        return password.toList().shuffled(secureRandom).joinToString("")
+    }
 }

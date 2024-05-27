@@ -26,7 +26,6 @@ data class CreateDoctorInput(
     val name: String,
     val email: String,
     val phoneNumber: String,
-    val password: String,
     val nif: String,
     val specialty: String
 )

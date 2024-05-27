@@ -11,6 +11,7 @@ import com.msp.api.http.controllers.users.models.UpdateDoctorInput
 import com.msp.api.http.controllers.users.models.UpdateUserInput
 import com.msp.api.http.controllers.users.models.toDoctorOutput
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.UserNotFound
+import com.msp.api.services.utils.MailjetEmailService
 import com.msp.api.services.utils.ServiceUtils
 import com.msp.api.storage.repo.DoctorsRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,17 +20,20 @@ import org.springframework.stereotype.Service
 @Service
 class DoctorsService(
     private val serviceUtils: ServiceUtils,
+    private val emailService: MailjetEmailService,
     private val usersService: UsersService,
     @Autowired val repo: DoctorsRepository
 ) {
 
     fun createDoctor(input: CreateDoctorInput): CreateUserOutput {
+        val password = serviceUtils.generateSecurePassword(10)
+
         val user = usersService.createUser(
             CreateUserInput(
                 name = input.name,
                 email = input.email,
                 phoneNumber = input.phoneNumber,
-                password = input.password,
+                password = password,
                 nif = input.nif,
                 role = UserRole.DOCTOR.toString()
             )
@@ -41,6 +45,8 @@ class DoctorsService(
                 specialty = input.specialty
             )
         )
+
+        emailService.sendEmailWithDoctorsCredentials(input.name, input.email, password)
 
         return CreateUserOutput(user.id, user.token)
     }
