@@ -15,6 +15,18 @@
         android:theme="@style/Theme.MyClinic"
         tools:targetApi="31">
         <activity
+            android:name=".History"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorSearch"
+            android:exported="false" />
+        <activity
+            android:name=".MedReminder"
+            android:exported="false" />
+        <activity
+            android:name=".Upcoming"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
