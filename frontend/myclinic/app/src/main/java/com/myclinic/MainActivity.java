@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //CHECKINDIALOG
-    public void Checkin(View view) {showDialogGiveRating();}
-    private void showDialogGiveRating(){
+    public void Checkin(View view) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_checkin);
@@ -90,8 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //CANCELAR VISITA
-    public void CancelVisit(View view) {showDialogCancelResFirst();}
-    private void showDialogCancelResFirst(){
+    public void CancelVisit(View view) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_cancelvisit);
@@ -128,5 +126,17 @@ public class MainActivity extends AppCompatActivity {
     //UPCOMING VISIT LIST INTENT
     public void Upcoming(View view) {
         startActivity(new Intent(MainActivity.this,Upcoming.class));
+    }
+
+    public void DoctorSearch(View view) {startActivity(new Intent(MainActivity.this,DoctorSearch.class));
+    }
+
+    public void MedReminder(View view) {startActivity(new Intent(MainActivity.this,MedReminder.class));
+    }
+
+    public void History(View view) {startActivity(new Intent(MainActivity.this,History.class));
+    }
+
+    public void AvailableServices(View view) {startActivity(new Intent(MainActivity.this,AvailableServices.class));
     }
 }

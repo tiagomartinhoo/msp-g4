@@ -353,6 +353,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="7dp"
                         android:layout_weight="1"
+                        android:onClick="DoctorSearch"
                         android:background="@drawable/card_general"
                         android:backgroundTint="@color/pink"
                         android:elevation="5dp"
@@ -390,6 +391,7 @@
                         android:background="@drawable/card_general"
                         android:backgroundTint="@color/pink"
                         android:elevation="5dp"
+                        android:onClick="MedReminder"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="10dp">
 
@@ -505,6 +507,7 @@
                         android:background="@drawable/card_general"
                         android:backgroundTint="@color/blue"
                         android:elevation="5dp"
+                        android:onClick="History"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="10dp">
 
@@ -540,6 +543,7 @@
                         android:background="@drawable/card_general"
                         android:backgroundTint="@color/yellow"
                         android:elevation="5dp"
+                        android:onClick="AvailableServices"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="10dp">
 

@@ -11,12 +11,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class DoctorSearch extends AppCompatActivity {
+public class AvailableServices extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_search);
+        setContentView(R.layout.activity_available_services);
 
         //STATUS BAR INVISIBLE
         Window w = getWindow();
