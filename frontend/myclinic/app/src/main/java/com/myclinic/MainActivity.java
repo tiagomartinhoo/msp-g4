@@ -5,19 +5,29 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.myclinic.http.Endpoints;
+import com.myclinic.http.PostData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout cLayCheckinCard, cLayCheckinNum;
+    private TextView ticketTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         cLayCheckinCard = findViewById(R.id.checkincard);
         cLayCheckinNum = findViewById(R.id.checkincard2);
+        ticketTextView = findViewById(R.id.ticket);
     }
 
     //CHECKINDIALOG
@@ -71,11 +82,44 @@ public class MainActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cLayCheckinCard.setVisibility(View.GONE);
-                cLayCheckinNum.setVisibility(View.VISIBLE);
+                sendCheckinRequest();
                 dialog.dismiss();
             }
         });
+    }
+
+    //SEND CHECKIN REQUEST
+    private void sendCheckinRequest() {
+
+        PostData task = new PostData(new JSONObject()) {
+            @Override
+            protected void onPostExecute(JSONObject result) {
+                handleCheckinResponse(result);
+            }
+        };
+        task.execute(Endpoints.checkIn("2bffadd5-8ff3-4c03-85bf-f41f8f701f46"), getSharedPreferences("login", MODE_PRIVATE).getString("token", "_"));
+
+    }
+
+    private void handleCheckinResponse(JSONObject result) {
+        if (result != null) {
+            try {
+                if (result.has("number")) {
+                    cLayCheckinCard.setVisibility(View.GONE);
+                    cLayCheckinNum.setVisibility(View.VISIBLE);
+                    String number = result.getString("number");
+                    String formattedTicketNumber = String.format("%03d", Integer.parseInt(number));
+                    ticketTextView.setText(String.format("G - %s", formattedTicketNumber));
+                    Toast.makeText(getApplicationContext(), "Check-in successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), result.getString("title"), Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "No response from server", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //MARCAR VISITA
@@ -85,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
     //LOG OUT
     public void Logout(View view) {
+        getSharedPreferences("login", MODE_PRIVATE).edit().clear().apply();
+        Intent intent = new Intent(MainActivity.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+        startActivity(intent);
+        finish();
     }
 
 

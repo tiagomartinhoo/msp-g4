@@ -1,43 +1,64 @@
 package com.myclinic.http;
 
 public class Endpoints {
-    public static final String API_URL = "https://babb-2a01-11-8120-37e0-51a-ed70-2810-6df3.ngrok-free.app/rest";
+    public static final String API_URL = "https://api-dot-myclinic-424418.ew.r.appspot.com/rest";
 
     // USERS
     public static final String USERS = API_URL + "/users";
 
     public static final String LOGIN = USERS + "/login";
-    public static final String USER_PHOTO = USERS + "/{uid}/photo";
+
+    public static String patientUserPhoto(String id) {
+        return USERS + "/" + id + "/photo";
+    }
 
     // PATIENTS
     public static final String PATIENTS = USERS + "/patients";
 
-    public static final String PATIENT_BY_ID = PATIENTS + "/{pID}";
+    public static String patientByID(String id) {
+        return PATIENTS + "/" + id;
+    }
 
-    public static final String CHECK_IN = PATIENTS + "/{pID}/checkIn";
+    public static String checkIn(String pID) {
+        return patientByID(pID) + "/checkIn";
+    }
 
     // DOCTORS
     public static final String DOCTORS = USERS + "/doctors";
 
-    public static final String DOCTOR_BY_ID = DOCTORS + "/{dID}";
+    public static String doctorByID(String id) {
+        return DOCTORS + "/" + id;
+    }
 
-    // Appointments
-    public static final String APPOINTMENTS = PATIENT_BY_ID + "/appointments";
+    // APPOINTMENTS
+    public static String appointments(String pID) {
+        return patientByID(pID) + "/appointments";
+    }
 
-    public static final String APPOINTMENT_BY_ID = PATIENT_BY_ID + "/appointments/{aID}";
+    public static String appointmentByID(String pID, String aID) {
+        return appointments(pID) + "/" + aID;
+    }
 
+    // SERVICES
     public static final String SERVICES_AVAILABLE = API_URL + "/services";
 
-    public static final String SERVICE_BY_ID = SERVICES_AVAILABLE + "/{id}";
+    public static String serviceByID(String id) {
+        return SERVICES_AVAILABLE + "/" + id;
+    }
 
+    // EXAMS
     public static final String EXAMS_AVAILABLE = API_URL + "/exams";
 
-    public static final String EXAM_BY_ID = EXAMS_AVAILABLE + "/{id}";
+    public static String examByID(String id) {
+        return EXAMS_AVAILABLE + "/" + id;
+    }
 
-    public static final String SCHEDULE_EXAM = PATIENT_BY_ID + "/exams";
+    public static String scheduleExam(String pID) {
+        return patientByID(pID) + "/exams";
+    }
 
-    public static final String SCHEDULED_EXAM_BY_ID = PATIENT_BY_ID + "/exams/{eID}";
-
-
+    public static String scheduleExamByID(String pID, String eID) {
+        return scheduleExam(pID) + "/" + eID;
+    }
 
 }
