@@ -301,7 +301,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="€0.00"
+                android:text="0€"
                 android:textColor="@color/darkest_grey"
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"

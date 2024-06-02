@@ -205,7 +205,7 @@ public class BookVisit extends AppCompatActivity {
                         JSONArray services = result.getJSONArray("services");
                         for (int i = 0; i < services.length(); i++) {
                             JSONObject service = services.getJSONObject(i);
-                            serviceList.add(new Service(service.getString("id"), service.getString("name"), service.getString("price")));
+                            serviceList.add(new Service(service.getString("id"), service.getString("name"), service.getDouble("price")));
                         }
                         ArrayAdapter<Service> adapter = new ArrayAdapter<>(BookVisit.this, android.R.layout.simple_spinner_item, serviceList);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -214,7 +214,7 @@ public class BookVisit extends AppCompatActivity {
                         serviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                totalPriceTextView.setText(serviceList.get(position).getPrice());
+                                totalPriceTextView.setText(String.format("%.2f€", serviceList.get(position).getPrice()));
                             }
 
                             @Override
