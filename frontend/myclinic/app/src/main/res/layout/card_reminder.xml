@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@+id/cardView2">
 
         <TextView
-            android:id="@+id/docname"
+            android:id="@+id/reminder_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
@@ -77,9 +77,24 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
             <TextView
+                android:id="@+id/reminder_days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:background="@drawable/tag_when"
+                android:drawableLeft="@drawable/ic_calendar"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
+                android:text="Everyday"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/reminder_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/tag_when"
                 android:drawableLeft="@drawable/ic_clock"
                 android:drawablePadding="10dp"
@@ -88,20 +103,6 @@
                 android:text="00:00"
                 android:textAlignment="center"
                 android:textColor="@color/blue"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/tag_where"
-                android:drawableLeft="@drawable/ic_calendar"
-                android:drawableTint="@color/yellow"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center"
-                android:text="Everyday"
-                android:textAlignment="center"
-                android:textColor="@color/yellow"
                 android:textSize="13sp" />
 
         </LinearLayout>
