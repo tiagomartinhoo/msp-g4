@@ -52,11 +52,20 @@ public class SplashScreen extends AppCompatActivity {
     private boolean checkUserLoggedIn() {
         SharedPreferences sharedPref = getSharedPreferences("login", MODE_PRIVATE);
         // sharedPref.edit().clear().apply();
-        return sharedPref.contains("token");
+        return sharedPref.contains("token") && sharedPref.contains("role");
     }
 
     private void navigateToMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        SharedPreferences sharedPref = getSharedPreferences("login", MODE_PRIVATE);
+        Intent intent;
+        String role = sharedPref.getString("role", "_");
+        if (role.equals("PATIENT")) {
+            intent = new Intent(this, MainActivity.class);
+        } else if (role.equals("ADMIN")) {
+            intent = new Intent(this, Admin.class);
+        } else {
+            intent = new Intent(this, Upcoming.class);
+        }
         startActivity(intent);
     }
 

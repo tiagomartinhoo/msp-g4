@@ -252,10 +252,14 @@ public class RegisterPatient extends AppCompatActivity {
             }
 
             private void saveUserCredentials(JSONObject result) {
-                String token;
+                String id, token, role;
                 try {
+                    id = result.getString("id");
                     token = result.getString("token");
+                    role = result.getString("role");
+                    editor.putString("id", id).apply();
                     editor.putString("token", token).apply();
+                    editor.putString("role", role).apply();
                     Log.v("Register", sharedPref.getString("token", token));
                 } catch (JSONException e) {
                     throw new RuntimeException(e);

@@ -65,7 +65,15 @@ public class Login extends AppCompatActivity {
             }
 
             private void startMainActivity() {
-                Intent intent = new Intent(Login.this, MainActivity.class);
+                Intent intent;
+                String role = sharedPref.getString("role", "_");
+                if (role.equals("PATIENT")) {
+                    intent = new Intent(Login.this, MainActivity.class);
+                } else if (role.equals("ADMIN")) {
+                    intent = new Intent(Login.this, Admin.class);
+                } else {
+                    intent = new Intent(Login.this, Upcoming.class);
+                }
                 startActivity(intent);
                 finish();
             }
@@ -124,10 +132,14 @@ public class Login extends AppCompatActivity {
             }
 
             private void saveUserCredentials(JSONObject result) {
-                String token;
+                String id, token, role;
                 try {
+                    id = result.getString("id");
                     token = result.getString("token");
+                    role = result.getString("role");
+                    editor.putString("id", id).apply();
                     editor.putString("token", token).apply();
+                    editor.putString("role", role).apply();
                     Log.v("Login", sharedPref.getString("token", token));
                 } catch (JSONException e) {
                     throw new RuntimeException(e);

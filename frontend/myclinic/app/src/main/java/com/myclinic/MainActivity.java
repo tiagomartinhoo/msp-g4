@@ -2,6 +2,7 @@ package com.myclinic;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -97,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 handleCheckinResponse(result);
             }
         };
-        task.execute(Endpoints.checkIn("2bffadd5-8ff3-4c03-85bf-f41f8f701f46"), getSharedPreferences("login", MODE_PRIVATE).getString("token", "_"));
+        SharedPreferences sharedPref = getSharedPreferences("login", MODE_PRIVATE);
+        task.execute(Endpoints.checkIn(sharedPref.getString("id", "_")), sharedPref.getString("token", "_"));
 
     }
 

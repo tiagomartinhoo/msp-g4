@@ -14,7 +14,7 @@ import javax.crypto.spec.SecretKeySpec
 @Component
 class JwtUtils(jwtConfiguration: JwtConfiguration) {
 
-    private val tokenExpirationDate = 8L
+    private val tokenExpirationDate = 30L
 
     private val userID = "userID"
     private val userRole = "role"
@@ -40,7 +40,7 @@ class JwtUtils(jwtConfiguration: JwtConfiguration) {
             Jwts.builder()
                 .setClaims(jwtPayload.claims)
                 .signWith(tokenKey)
-                .setExpiration(Date.from(Instant.now().plus(tokenExpirationDate, ChronoUnit.HOURS)))
+                .setExpiration(Date.from(Instant.now().plus(tokenExpirationDate, ChronoUnit.DAYS)))
                 .compact()
         ).token
     }

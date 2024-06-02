@@ -4,7 +4,8 @@ import com.msp.api.http.pipeline.exceptionHandler.exceptions.UserRoleNotFound
 
 enum class UserRole {
     PATIENT,
-    DOCTOR;
+    DOCTOR,
+    ADMIN;
 
     companion object {
         fun String?.toRole(): UserRole =

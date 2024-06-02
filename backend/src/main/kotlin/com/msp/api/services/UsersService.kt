@@ -37,7 +37,7 @@ class UsersService(
 
         val token = serviceUtils.createToken(UUID.fromString(user.uId), user.role)
 
-        return LoginOutput(token)
+        return LoginOutput(user.uId, token, user.role.toString())
     }
 
     fun createUser(input: CreateUserInput): CreateUserOutput {

@@ -9,6 +9,7 @@ import com.msp.api.storage.repo.CheckInRepository
 import com.msp.api.storage.repo.ExamScheduleRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
@@ -19,11 +20,13 @@ class CheckInService(
 ) {
 
     fun checkIn(pID: String): Int {
-        if (repo.findByIdOrNull(pID) != null) {
-            throw AlreadyCheckIn()
-        }
+        val checkIn = repo.findByIdOrNull(pID)
 
         val now = LocalDateTime.now()
+
+        if (checkIn != null && checkIn.date.dayOfYear == now.dayOfYear) {
+            throw AlreadyCheckIn()
+        }
 
         val patientAppointments = appointmentsRepository.findBypID(pID).filter { it.timeOfAppointment.dayOfYear == now.dayOfYear }
 
@@ -37,7 +40,7 @@ class CheckInService(
 
         val state = repo.count().toInt()
 
-        repo.insert(CheckIn(pID, state + 1))
+        repo.insert(CheckIn(pID, now.toLocalDate(), state + 1))
 
         return state + 1
     }
