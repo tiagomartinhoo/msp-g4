@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d9938dce-ab3d-46ff-a9cd-973442c5f6aa",
+		"_postman_id": "c83f64dc-d851-469e-b101-ed983524bc67",
 		"name": "MyClinic",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "33842493",
-		"_collection_link": "https://msp-g4.postman.co/workspace/Team-Workspace~8030939d-50e2-44d5-8c29-5bde944574dc/collection/33842493-d9938dce-ab3d-46ff-a9cd-973442c5f6aa?action=share&source=collection_link&creator=33842493"
+		"_exporter_id": "18705234",
+		"_collection_link": "https://rtg-team.postman.co/workspace/MyClinic~d65152ae-f1af-48ed-8143-ff99072e58ce/collection/18705234-c83f64dc-d851-469e-b101-ed983524bc67?action=share&source=collection_link&creator=18705234"
 	},
 	"item": [
 		{
@@ -20,7 +20,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Patient4789\",\r\n    \"email\": \"patient798@gmail.com\",\r\n    \"phoneNumber\": \"+351911145678\",\r\n    \"password\": \"nYEiMI#IakQ5I{k\",\r\n    \"nif\": \"51161223\",\r\n    \"birthDate\": \"2002-02-03\",\r\n    \"address\": \"Chelas\",\r\n    \"insurance\": \"Multicare\"\r\n}",
+									"raw": "{\r\n    \"name\": \"Patient4789\",\r\n    \"email\": \"patientmsp@gmail.com\",\r\n    \"phoneNumber\": \"+351911145678\",\r\n    \"password\": \"nYEiMI#IakQ5I{k\",\r\n    \"nif\": \"511612232\",\r\n    \"birthDate\": \"2002-02-03\",\r\n    \"address\": \"Chelas\",\r\n    \"insurance\": \"Multicare\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -88,11 +88,6 @@
 									],
 									"query": [
 										{
-											"key": "text",
-											"value": "Test",
-											"disabled": true
-										},
-										{
 											"key": "page",
 											"value": "0",
 											"disabled": true
@@ -100,6 +95,11 @@
 										{
 											"key": "size",
 											"value": "10",
+											"disabled": true
+										},
+										{
+											"key": "text",
+											"value": "tiago",
 											"disabled": true
 										}
 									]
@@ -114,7 +114,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Patient2\"\r\n}",
+									"raw": "{\r\n    \"name\": \"Tiago Martinho\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -199,7 +199,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Doctor2\",\r\n    \"email\": \"doctor2@gmail.com\",\r\n    \"phoneNumber\": \"+351912345678\",\r\n    \"password\": \"nYEiMI#IakQ5I{k\",\r\n    \"nif\": \"516\",\r\n    \"specialty\": \"Orthopedic\"\r\n}",
+									"raw": "{\r\n    \"name\": \"Duarte Belo\",\r\n    \"email\": \"djl.belo@campus.fct.unl.pt\",\r\n    \"phoneNumber\": \"+351912345678\",\r\n    \"nif\": \"205\",\r\n    \"specialty\": \"Orthopedic\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -344,7 +344,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"tiago@gmail.com\",\r\n    \"password\": \"Password2002@\"\r\n}",
+							"raw": "{\r\n    \"email\": \"patientmsp@gmail.com\",\r\n    \"password\": \"nYEiMI#IakQ5I{k\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -429,7 +429,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"dID\" : \"8928f219-28ed-40cb-8b48-276aab8d652a\",\r\n    \"serviceID\" : \"6624333d0c765121a479119c\",\r\n    \"timeOfAppointment\" : \"2024-04-20T12:30:45\" \r\n}",
+							"raw": "{\r\n    \"dID\" : \"8928f219-28ed-40cb-8b48-276aab8d652a\",\r\n    \"serviceID\" : \"6624333d0c765121a479119c\",\r\n    \"timeOfAppointment\" : \"2024-06-02T23:50:45\" \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -468,7 +468,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/rest/users/patients/{{pID}}/appointments/45603496-68a6-4f5d-b35f-30461b8af44d",
+							"raw": "{{url}}/rest/users/patients/{{pID}}/appointments/d5e421b2-23b7-4310-939e-2e5f73d564a7",
 							"host": [
 								"{{url}}"
 							],
@@ -478,7 +478,44 @@
 								"patients",
 								"{{pID}}",
 								"appointments",
-								"45603496-68a6-4f5d-b35f-30461b8af44d"
+								"d5e421b2-23b7-4310-939e-2e5f73d564a7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointments Of Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/appointments?size=20",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"appointments"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "20"
+								}
 							]
 						}
 					},
@@ -516,8 +553,60 @@
 					"response": []
 				},
 				{
+					"name": "Cancel Appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/appointments/{{appointmentId}}/cancel",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"appointments",
+								"{{appointmentId}}",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete Appointment",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -596,7 +685,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"examID\" : \"662434e90c765121a47911a9\",\r\n    \"examDateTime\" : \"1999-04-20T12:30:45\" \r\n}",
+							"raw": "{\r\n    \"examID\" : \"662434e90c765121a47911a9\",\r\n    \"examDateTime\" : \"1999-04-21T12:30:45\" \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -620,7 +709,7 @@
 					"response": []
 				},
 				{
-					"name": "Requested Exam By ID",
+					"name": "Get Exam Of Patient",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -635,7 +724,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/rest/users/patients/{{pID}}/exams/4b82925c-b27b-4450-817a-a630394a6bed",
+							"raw": "{{url}}/rest/users/patients/{{pID}}/exams/bd48a11f-7a8f-4c9d-ae45-ec6c5de490bd",
 							"host": [
 								"{{url}}"
 							],
@@ -645,7 +734,38 @@
 								"patients",
 								"{{pID}}",
 								"exams",
-								"4b82925c-b27b-4450-817a-a630394a6bed"
+								"bd48a11f-7a8f-4c9d-ae45-ec6c5de490bd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Exams Of Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rest/users/patients/{{pID}}/exams",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rest",
+								"users",
+								"patients",
+								"{{pID}}",
+								"exams"
 							]
 						}
 					},
@@ -725,6 +845,23 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Isabela",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/isabela",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"isabela"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -761,6 +898,11 @@
 			"type": "string"
 		},
 		{
+			"key": "token2",
+			"value": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySUQiOiIyYmZmYWRkNS04ZmYzLTRjMDMtODViZi1mNDFmOGY3MDFmNDYiLCJyb2xlIjoiUEFUSUVOVCIsImV4cCI6MTcxMzc1NDQ2N30.3c3rrDya4iDmsHDFz3dTdjc41k3Ra0cav3PntzQtxVEmV7oDMrqIazq0AEKggxE2kFvFL6gdUi7oyT_0oCRtxw",
+			"type": "string"
+		},
+		{
 			"key": "pID",
 			"value": "761b8a0b-4b8e-4356-a258-caafdaec2d99",
 			"type": "string"
@@ -773,16 +915,6 @@
 		{
 			"key": "appointmentId",
 			"value": "50f93827-cdbd-4caa-acf1-216f8cc5c8d0",
-			"type": "string"
-		},
-		{
-			"key": "patient2",
-			"value": "2bffadd5-8ff3-4c03-85bf-f41f8f701f46",
-			"type": "string"
-		},
-		{
-			"key": "token2",
-			"value": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySUQiOiIyYmZmYWRkNS04ZmYzLTRjMDMtODViZi1mNDFmOGY3MDFmNDYiLCJyb2xlIjoiUEFUSUVOVCIsImV4cCI6MTcxMzc1NDQ2N30.3c3rrDya4iDmsHDFz3dTdjc41k3Ra0cav3PntzQtxVEmV7oDMrqIazq0AEKggxE2kFvFL6gdUi7oyT_0oCRtxw",
 			"type": "string"
 		},
 		{
