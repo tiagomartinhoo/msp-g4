@@ -323,6 +323,15 @@
                 android:layout_marginHorizontal="20dp"/>
 
             <TextView
+                android:id="@+id/upcoming_appointment_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="No upcoming appointments"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"

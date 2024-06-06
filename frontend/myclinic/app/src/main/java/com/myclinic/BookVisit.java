@@ -38,6 +38,7 @@ public class BookVisit extends AppCompatActivity {
     private TextView totalPriceTextView, textTitledoc;
     private ArrayList<Doctor> doctorList = new ArrayList<>();
     private ArrayList<Service> serviceList = new ArrayList<>();
+    private String selectedDoctorId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +78,11 @@ public class BookVisit extends AppCompatActivity {
 
         fetchDoctors();
         fetchServices();
+
+        // Get the doctor information from the intent
+        if (getIntent() != null) {
+            selectedDoctorId = getIntent().getStringExtra("doctorId");
+        }
     }
 
     private void openDatePicker() {
@@ -184,11 +190,21 @@ public class BookVisit extends AppCompatActivity {
                         ArrayAdapter<Doctor> adapter = new ArrayAdapter<>(BookVisit.this, android.R.layout.simple_spinner_item, doctorList);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         doctorSpinner.setAdapter(adapter);
+
+                        // Pre-select the doctor if passed via intent
+                        if (selectedDoctorId != null) {
+                            for (int i = 0; i < doctorList.size(); i++) {
+                                if (doctorList.get(i).getId().equals(selectedDoctorId)) {
+                                    doctorSpinner.setSelection(i);
+                                    break;
+                                }
+                            }
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to fetch doctors", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookVisit.this, "Failed to fetch doctors", Toast.LENGTH_SHORT).show();
                 }
             }
         };

@@ -1,18 +1,25 @@
 package com.myclinic;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.myclinic.http.Endpoints;
+import com.myclinic.http.GetData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,16 +33,16 @@ import java.net.URL;
 
 public class DoctorSearch extends AppCompatActivity {
 
-    private EditText editTextSearch;
-    private ProgressBar progressBar;
+    private EditText searchBox;
+    private LinearLayout doctorListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_search);
 
-        editTextSearch = findViewById(R.id.searchbox);
-        progressBar = findViewById(R.id.progressBar);
+        searchBox = findViewById(R.id.searchbox);
+        doctorListLayout = findViewById(R.id.doctor_list);
 
         //STATUS BAR INVISIBLE
         Window w = getWindow();
@@ -47,112 +54,89 @@ public class DoctorSearch extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+        searchDoctors();
     }
 
     public void Back(View view) {
         finish();
     }
 
-    public void searchDoctors(View view) {
-        sendSearchRequest();
-    }
-
-    private void sendSearchRequest() {
-        JSONObject postData = createSearchData();
-        if (postData != null) {
-            progressBar.setVisibility(View.VISIBLE);
-            PostData task = new PostData(postData) {
-                @Override
-                protected void onPostExecute(JSONObject result) {
-                    handleSearchResponse(result);
+    public void searchDoctors() {
+        SharedPreferences sharedPref = getSharedPreferences("login", MODE_PRIVATE);
+        GetData task = new GetData() {
+            @Override
+            protected void onPostExecute(JSONObject result) {
+                if (result != null) {
+                    try {
+                        JSONArray doctors = result.getJSONArray("list");
+                        doctorListLayout.removeAllViews();
+                        for (int i = 0; i < doctors.length(); i++) {
+                            JSONObject doctor = doctors.getJSONObject(i);
+                            addDoctorCard(doctor);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to fetch doctors", Toast.LENGTH_SHORT).show();
                 }
-            };
-            Log.v("DOCTOR SEARCH", Endpoints.DOCTORS + "?text=" + editTextSearch.getText());
-            task.execute(Endpoints.DOCTORS + "?text=" + editTextSearch.getText());
-        }
+            }
+        };
+        task.execute(Endpoints.DOCTORS, sharedPref.getString("token", "_"));
     }
 
-    private JSONObject createSearchData() {
-        String query = editTextSearch.getText().toString();
-
+    public void performSearch(View view) {
+        String query = searchBox.getText().toString().trim();
+        Log.v("QUERY", query);
         if (query.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Search query cannot be empty", Toast.LENGTH_SHORT).show();
-            return null;
+            Toast.makeText(this, "Please enter a search term", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("query", query);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return postData;
+        SharedPreferences sharedPref = getSharedPreferences("login", MODE_PRIVATE);
+        GetData task = new GetData() {
+            @Override
+            protected void onPostExecute(JSONObject result) {
+                if (result != null) {
+                    try {
+                        JSONArray doctors = result.getJSONArray("list");
+                        doctorListLayout.removeAllViews();
+                        for (int i = 0; i < doctors.length(); i++) {
+                            JSONObject doctor = doctors.getJSONObject(i);
+                            addDoctorCard(doctor);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to fetch doctors", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        task.execute(Endpoints.DOCTORS + "?text=" + query, sharedPref.getString("token", "_"));
     }
 
-    private void handleSearchResponse(JSONObject result) {
-        progressBar.setVisibility(View.GONE);
-        if (result != null && result.has("doctors")) {
+    private void addDoctorCard(JSONObject doctor) throws JSONException {
+        View doctorCard = LayoutInflater.from(this).inflate(R.layout.card_doctors, doctorListLayout, false);
+        TextView doctorName = doctorCard.findViewById(R.id.docname);
+        TextView doctorSpecialty = doctorCard.findViewById(R.id.docspec);
+        Button bookNowButton = doctorCard.findViewById(R.id.book_now_button);
+
+        doctorName.setText(doctor.getString("name"));
+        doctorSpecialty.setText(doctor.getString("specialty"));
+
+        bookNowButton.setOnClickListener(v -> {
+            Intent intent = new Intent(DoctorSearch.this, BookVisit.class);
             try {
-                JSONArray doctors = result.getJSONArray("doctors");
-                // Process the list of doctors (e.g., display them in a RecyclerView)
+                intent.putExtra("doctorId", doctor.getString("id"));
+                intent.putExtra("doctorName", doctor.getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        } else {
-            Toast.makeText(getApplicationContext(), "No doctors found", Toast.LENGTH_SHORT).show();
-        }
-    }
+            startActivity(intent);
+        });
 
-    private abstract class PostData extends AsyncTask<String, Void, JSONObject> {
-        private final JSONObject postData;
-
-        protected PostData(JSONObject postData) {
-            this.postData = postData;
-        }
-
-        @Override
-        protected JSONObject doInBackground(String... urls) {
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-            try {
-                URL url = new URL(urls[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setDoOutput(true);
-                connection.setDoInput(true);
-
-                OutputStream os = connection.getOutputStream();
-                os.write(postData.toString().getBytes("UTF-8"));
-                os.close();
-
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line);
-                    }
-                    return new JSONObject(sb.toString());
-                } else {
-                    return null;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
+        doctorListLayout.addView(doctorCard);
     }
 }

@@ -20,15 +20,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.myclinic.http.Endpoints;
+import com.myclinic.http.GetData;
 import com.myclinic.http.PostData;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout cLayCheckinCard, cLayCheckinNum;
-    private TextView ticketTextView;
+    private TextView ticketTextView, upcomingAppointmentText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,50 @@ public class MainActivity extends AppCompatActivity {
         cLayCheckinCard = findViewById(R.id.checkincard);
         cLayCheckinNum = findViewById(R.id.checkincard2);
         ticketTextView = findViewById(R.id.ticket);
+        upcomingAppointmentText = findViewById(R.id.upcoming_appointment_text);
+
+        fetchUpcomingAppointments();
+    }
+
+    private void fetchUpcomingAppointments() {
+        SharedPreferences sharedPref = getSharedPreferences("login", MODE_PRIVATE);
+        GetData task = new GetData() {
+            @Override
+            protected void onPostExecute(JSONObject result) {
+                if (result != null) {
+                    try {
+                        JSONArray appointments = result.getJSONArray("list");
+                        if (appointments.length() > 0) {
+                            JSONObject firstAppointment = appointments.getJSONObject(0);
+                            displayFirstAppointment(firstAppointment);
+                        } else {
+                            upcomingAppointmentText.setText("No upcoming appointments");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    upcomingAppointmentText.setText("Failed to fetch appointments");
+                }
+            }
+        };
+        task.execute(Endpoints.appointments(sharedPref.getString("id", "_")), sharedPref.getString("token", "_"));
+    }
+
+    private void displayFirstAppointment(JSONObject appointment) throws JSONException {
+        String doctorName = appointment.getString("doctorName");
+        String serviceName = appointment.getString("serviceName");
+        String appointmentTime = appointment.getString("timeOfAppointment");
+
+        // Format the appointment time
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.parse(appointmentTime, formatter);
+        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        String displayText = String.format("Next Appointment: %s\nWith: Dr. %s\nService: %s",
+                dateTime.format(displayFormatter), doctorName, serviceName);
+
+        upcomingAppointmentText.setText(displayText);
     }
 
     //CHECKINDIALOG

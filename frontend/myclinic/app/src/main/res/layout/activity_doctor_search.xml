@@ -24,7 +24,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/title"
-        style="@style/Widget.AppCompat.Button.Borderless"/>
+        style="@style/Widget.AppCompat.Button.Borderless" />
 
     <EditText
         android:id="@+id/searchbox"
@@ -54,21 +54,31 @@
         android:textColorHint="@color/grey"
         android:textSize="13sp"
         app:layout_constraintTop_toBottomOf="@id/title"
-        android:layout_marginHorizontal="20dp"/>
+        android:layout_marginHorizontal="20dp" />
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:backgroundTint="@color/blue"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:onClick="performSearch"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/searchbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/doctor_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/searchbox">
-
-        <include
-            layout="@layout/card_doctors"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/search_button"
+        android:layout_marginHorizontal="20dp">
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
