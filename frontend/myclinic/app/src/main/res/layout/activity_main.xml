@@ -315,21 +315,15 @@
 
             </LinearLayout>
 
-            <include
-                layout="@layout/card_visit"
+            <LinearLayout
+                android:id="@+id/upcoming_appointments_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="20dp"/>
-
-            <TextView
-                android:id="@+id/upcoming_appointment_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="No upcoming appointments"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"/>
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:layout_width="wrap_content"

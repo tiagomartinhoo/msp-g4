@@ -21,11 +21,11 @@ data class Appointment(
     val cancellationReason: String = ""
 )
 
-fun Appointment.toOutput() = AppointmentOutput(
+fun Appointment.toOutput(doctorName: String, serviceName: String) = AppointmentOutput(
     aID = aID,
-    dID = dID,
+    doctorName = doctorName,
     pID = pID,
-    serviceID = serviceID,
+    serviceName = serviceName,
     timeOfAppointment = timeOfAppointment,
     timeCreated = timeCreated,
     timeStarted = timeStarted,

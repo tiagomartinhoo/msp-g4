@@ -20,9 +20,9 @@ data class ExamSchedule(
     val cancellationReason: String = ""
 )
 
-fun ExamSchedule.toOutput() = ExamScheduleOutput(
+fun ExamSchedule.toOutput(examName: String) = ExamScheduleOutput(
     id = id,
-    eID = eID,
+    examName = examName,
     pID = pID,
     timeOfExam = timeOfExam,
     timeCreated = timeCreated,

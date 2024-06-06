@@ -1,7 +1,6 @@
 package com.msp.api.http.controllers.appointments
 
 import com.msp.api.domain.User
-import com.msp.api.domain.toOutput
 import com.msp.api.http.Uris
 import com.msp.api.http.controllers.appointments.models.AppointmentCancel
 import com.msp.api.http.controllers.appointments.models.AppointmentCreation
@@ -16,7 +15,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -42,7 +40,7 @@ class AppointmentsController(private val service: AppointmentsService) {
     fun getAppointment(@PathVariable aID: String, @PathVariable pID: String, user: User): ResponseEntity<AppointmentOutput> {
         if (pID != user.uId) throw NotYourAccount()
 
-        return ResponseEntity.ok(service.getAppointment(aID).toOutput())
+        return ResponseEntity.ok(service.getAppointment(aID))
     }
 
     @GetMapping(Uris.APPOINTMENTS)
@@ -70,7 +68,7 @@ class AppointmentsController(private val service: AppointmentsService) {
     }
 
     @Authentication
-    @PatchMapping(Uris.APPOINTMENT_BY_ID)
+    @PostMapping("${Uris.APPOINTMENT_BY_ID}/cancel")
     fun cancelAppointment(
         @RequestBody appointmentCancel: AppointmentCancel,
         @PathVariable aID: String,

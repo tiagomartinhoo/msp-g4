@@ -4,9 +4,9 @@ import java.time.LocalDateTime
 
 data class AppointmentOutput(
     val aID: String,
-    val dID: String,
+    val doctorName: String,
     val pID: String,
-    val serviceID: String,
+    val serviceName: String,
     val timeOfAppointment: LocalDateTime,
     val timeCreated: LocalDateTime,
     val timeStarted: LocalDateTime?,

@@ -127,7 +127,7 @@ public class BookVisit extends AppCompatActivity {
             if (appointment.isChecked()) {
                 endpoint = Endpoints.appointments(userId);
             } else if (exam.isChecked()) {
-                endpoint = Endpoints.scheduleExam(userId);
+                endpoint = Endpoints.exams(userId);
             } else {
                 Toast.makeText(getApplicationContext(), "Please select either Appointment or Exam", Toast.LENGTH_SHORT).show();
                 return;
@@ -168,7 +168,7 @@ public class BookVisit extends AppCompatActivity {
 
     private void handlePostResponse(JSONObject result) {
         if (result != null) {
-            Toast.makeText(getApplicationContext(), "Request Successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Schedule Successful", Toast.LENGTH_SHORT).show();
             finish();
         } else {
             Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show();
@@ -217,8 +217,14 @@ public class BookVisit extends AppCompatActivity {
             @Override
             protected void onPostExecute(JSONObject result) {
                 if (result != null) {
+                    serviceList.clear();
                     try {
-                        JSONArray services = result.getJSONArray("services");
+                        JSONArray services;
+                        if (appointment.isChecked())
+                            services = result.getJSONArray("services");
+                        else
+                            services = result.getJSONArray("exams");
+
                         for (int i = 0; i < services.length(); i++) {
                             JSONObject service = services.getJSONObject(i);
                             serviceList.add(new Service(service.getString("id"), service.getString("name"), service.getDouble("price")));
@@ -246,7 +252,10 @@ public class BookVisit extends AppCompatActivity {
                 }
             }
         };
-        task.execute(Endpoints.SERVICES_AVAILABLE, sharedPref.getString("token", "_"));
+        if (appointment.isChecked())
+            task.execute(Endpoints.SERVICES_AVAILABLE, sharedPref.getString("token", "_"));
+        else
+            task.execute(Endpoints.EXAMS_AVAILABLE, sharedPref.getString("token", "_"));
     }
 
     private void handleCheckboxClick(CheckBox selected, CheckBox other) {
@@ -260,6 +269,7 @@ public class BookVisit extends AppCompatActivity {
                 textTitledoc.setVisibility(View.VISIBLE);
             }
         }
+        fetchServices();
     }
 
     public void Cancel(View view) {

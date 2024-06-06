@@ -8,11 +8,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +35,8 @@ import java.time.format.DateTimeFormatter;
 public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout cLayCheckinCard, cLayCheckinNum;
-    private TextView ticketTextView, upcomingAppointmentText;
+    private TextView ticketTextView;
+    private LinearLayout upcomingAppointmentsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
         cLayCheckinCard = findViewById(R.id.checkincard);
         cLayCheckinNum = findViewById(R.id.checkincard2);
         ticketTextView = findViewById(R.id.ticket);
-        upcomingAppointmentText = findViewById(R.id.upcoming_appointment_text);
+
+        upcomingAppointmentsContainer = findViewById(R.id.upcoming_appointments_container);
 
         fetchUpcomingAppointments();
     }
@@ -75,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject firstAppointment = appointments.getJSONObject(0);
                             displayFirstAppointment(firstAppointment);
                         } else {
-                            upcomingAppointmentText.setText("No upcoming appointments");
+                            displayNoUpcomingAppointments();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    upcomingAppointmentText.setText("Failed to fetch appointments");
+                    displayFetchError();
                 }
             }
         };
@@ -89,19 +93,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayFirstAppointment(JSONObject appointment) throws JSONException {
+        View appointmentCard = LayoutInflater.from(this).inflate(R.layout.card_visit, upcomingAppointmentsContainer, false);
+
+        TextView docNameTextView = appointmentCard.findViewById(R.id.docname);
+        TextView docSpecTextView = appointmentCard.findViewById(R.id.docspec);
+        TextView dateTextView = appointmentCard.findViewById(R.id.date);
+        TextView timeTextView = appointmentCard.findViewById(R.id.time);
+        ImageButton cancelButton = appointmentCard.findViewById(R.id.cancelButton);
+
+        String appointmentID = appointment.getString("aid");
         String doctorName = appointment.getString("doctorName");
         String serviceName = appointment.getString("serviceName");
         String appointmentTime = appointment.getString("timeOfAppointment");
 
-        // Format the appointment time
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(appointmentTime, formatter);
-        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        DateTimeFormatter displayFormatterDate = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter displayFormatterTime = DateTimeFormatter.ofPattern("HH:mm");
 
-        String displayText = String.format("Next Appointment: %s\nWith: Dr. %s\nService: %s",
-                dateTime.format(displayFormatter), doctorName, serviceName);
+        if (dateTime.isBefore(LocalDateTime.now()) || appointment.getBoolean("canceled")) {
+            displayNoUpcomingAppointments();
+            return;
+        }
 
-        upcomingAppointmentText.setText(displayText);
+        docNameTextView.setText(doctorName);
+        docSpecTextView.setText(serviceName);
+        dateTextView.setText(dateTime.format(displayFormatterDate));
+        timeTextView.setText(dateTime.format(displayFormatterTime));
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCancelDialog(appointmentID);
+            }
+        });
+
+        upcomingAppointmentsContainer.addView(appointmentCard);
+    }
+
+    private void displayNoUpcomingAppointments() {
+        TextView noAppointmentsTextView = new TextView(this);
+        noAppointmentsTextView.setText("No upcoming appointments");
+        noAppointmentsTextView.setTextSize(18);
+        upcomingAppointmentsContainer.addView(noAppointmentsTextView);
+    }
+
+    private void displayFetchError() {
+        TextView errorTextView = new TextView(this);
+        errorTextView.setText("Failed to fetch appointments");
+        errorTextView.setTextSize(18);
+        upcomingAppointmentsContainer.addView(errorTextView);
     }
 
     //CHECKINDIALOG
@@ -189,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //CANCELAR VISITA
-    public void CancelVisit(View view) {
+    private void showCancelDialog(String appointmentId) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_cancelvisit);
@@ -217,11 +258,39 @@ public class MainActivity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Yes was clicked", Toast.LENGTH_SHORT).show();
+                cancelAppointment(appointmentId);
                 dialog.dismiss();
             }
         });
     }
+
+    private void cancelAppointment(String appointmentId) {
+        SharedPreferences sharedPref = getSharedPreferences("login", MODE_PRIVATE);
+        PostData task = new PostData(new JSONObject()) {
+            @Override
+            protected void onPostExecute(JSONObject result) {
+                handleCancelResponse(result);
+            }
+        };
+        task.execute(Endpoints.cancelAppointment(sharedPref.getString("id", "_"), appointmentId), sharedPref.getString("token", "_"));
+    }
+
+    private void handleCancelResponse(JSONObject result) {
+        if (result != null) {
+            try {
+                if (result.getBoolean("success")) {
+                    Toast.makeText(getApplicationContext(), "Appointment cancelled successfully", Toast.LENGTH_SHORT).show();
+                    fetchUpcomingAppointments();
+                } else {
+                    Toast.makeText(getApplicationContext(), result.getString("message"), Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     //UPCOMING VISIT LIST INTENT
     public void Upcoming(View view) {

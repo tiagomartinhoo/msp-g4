@@ -53,7 +53,13 @@ class ExamsService(
 
         val exams = examScheduleRepo.searchAllByPID(pID, pageable)
 
-        return ExamsScheduleOutput(exams.totalPages, exams.toList().map { it.toOutput() })
+        return ExamsScheduleOutput(
+            exams.totalPages,
+            exams.toList().map {
+                val examName = examsRepo.findByIdOrNull(it.eID)?.name ?: throw ExamNotFound()
+                it.toOutput(examName)
+            }
+        )
     }
 
     fun updateExamScheduled(eID: String, pID: String, examScheduledUpdate: ExamScheduledUpdate) {

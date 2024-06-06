@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 data class ExamScheduleOutput(
     val id: String,
-    val eID: String,
+    val examName: String,
     val pID: String,
     val timeOfExam: LocalDateTime,
     val timeCreated: LocalDateTime,

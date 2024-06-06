@@ -3,14 +3,17 @@ package com.msp.api.services
 import com.msp.api.domain.Appointment
 import com.msp.api.domain.toOutput
 import com.msp.api.http.controllers.appointments.models.AppointmentCreation
+import com.msp.api.http.controllers.appointments.models.AppointmentOutput
 import com.msp.api.http.controllers.appointments.models.AppointmentUpdate
 import com.msp.api.http.controllers.appointments.models.AppointmentsOutput
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.AppointmentNotFound
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.NotYourAppointment
 import com.msp.api.http.pipeline.exceptionHandler.exceptions.ServiceNotFound
+import com.msp.api.http.pipeline.exceptionHandler.exceptions.UserNotFound
 import com.msp.api.services.utils.ServiceUtils
 import com.msp.api.storage.repo.AppointmentsRepository
 import com.msp.api.storage.repo.ServicesRepo
+import com.msp.api.storage.repo.UsersRepository
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -21,7 +24,8 @@ import java.util.UUID
 class AppointmentsService(
     private val serviceUtils: ServiceUtils,
     private val repo: AppointmentsRepository,
-    val servicesRepo: ServicesRepo
+    val servicesRepo: ServicesRepo,
+    val usersRepo: UsersRepository
 ) {
 
     fun createAppointment(pID: String, appointmentCreation: AppointmentCreation): String {
@@ -43,8 +47,13 @@ class AppointmentsService(
         return aId
     }
 
-    fun getAppointment(aID: String): Appointment {
-        return repo.findByaID(aID) ?: throw AppointmentNotFound()
+    fun getAppointment(aID: String): AppointmentOutput {
+        val appointment = repo.findByaID(aID) ?: throw AppointmentNotFound()
+
+        val doctorName = usersRepo.findByuId(appointment.dID)?.name ?: throw UserNotFound()
+        val serviceName = servicesRepo.findByIdOrNull(appointment.serviceID)?.name ?: throw ServiceNotFound()
+
+        return appointment.toOutput(doctorName, serviceName)
     }
 
     fun getAppointments(page: Int, size: Int): AppointmentsOutput {
@@ -52,7 +61,15 @@ class AppointmentsService(
 
         val appointments = repo.searchAllFields("", pageable)
 
-        return AppointmentsOutput(appointments.totalPages, appointments.toList().map { it.toOutput() })
+        return AppointmentsOutput(
+            appointments.totalPages,
+            appointments.toList().map { appointment ->
+                val doctorName = usersRepo.findByuId(appointment.dID)?.name ?: throw UserNotFound()
+                val serviceName = servicesRepo.findByIdOrNull(appointment.serviceID)?.name ?: throw ServiceNotFound()
+
+                appointment.toOutput(doctorName, serviceName)
+            }
+        )
     }
 
     fun getAppointmentsOfPatient(pID: String, page: Int, size: Int): AppointmentsOutput {
@@ -62,22 +79,29 @@ class AppointmentsService(
 
         val appointments = repo.searchAllByPID(pID, pageable)
 
-        return AppointmentsOutput(appointments.totalPages, appointments.toList().map { it.toOutput() })
+        return AppointmentsOutput(
+            appointments.totalPages,
+            appointments.toList().map { appointment ->
+                val doctorName = usersRepo.findByuId(appointment.dID)?.name ?: throw UserNotFound()
+                val serviceName = servicesRepo.findByIdOrNull(appointment.serviceID)?.name ?: throw ServiceNotFound()
+
+                appointment.toOutput(doctorName, serviceName)
+            }
+        )
     }
 
     fun updateAppointment(aID: String, appointmentUpdate: AppointmentUpdate) {
-        val appointment = getAppointment(aID)
+        val appointment = repo.findByaID(aID) ?: throw AppointmentNotFound()
 
         repo.save(
             appointment.copy(
-                dID = appointmentUpdate.dId ?: appointment.dID,
                 timeOfAppointment = appointmentUpdate.timeOfAppointment ?: appointment.timeOfAppointment
             )
         )
     }
 
     fun cancelAppointment(aID: String, reason: String?) {
-        val appointment = getAppointment(aID)
+        val appointment = repo.findByaID(aID) ?: throw AppointmentNotFound()
 
         repo.save(
             appointment.copy(

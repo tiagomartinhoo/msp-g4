@@ -39,6 +39,10 @@ public class Endpoints {
         return appointments(pID) + "/" + aID;
     }
 
+    public static String cancelAppointment(String pID, String aID) {
+        return appointmentByID(pID, aID) + "/cancel";
+    }
+
     // SERVICES
     public static final String SERVICES_AVAILABLE = API_URL + "/services";
 
@@ -53,12 +57,12 @@ public class Endpoints {
         return EXAMS_AVAILABLE + "/" + id;
     }
 
-    public static String scheduleExam(String pID) {
+    public static String exams(String pID) {
         return patientByID(pID) + "/exams";
     }
 
     public static String scheduleExamByID(String pID, String eID) {
-        return scheduleExam(pID) + "/" + eID;
+        return exams(pID) + "/" + eID;
     }
 
 }
